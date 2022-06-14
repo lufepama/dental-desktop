@@ -18,24 +18,27 @@ const Navbar = () => {
                     <NavbarItem icon={<AccountBoxIcon />} title='Pacientes' options={[{ title: 'Informacion del paciente', url: '/patients/create' }, { title: 'Lista de pacientes', url: '/patients/list' }]} />
                 </li>
                 <li>
-                    <NavbarItem icon={<MedicalInformationIcon />} title='Doctores' options={[{ title: 'Informacion del doctor', url: 'patientInformationPage' }, { title: 'Lista de doctores', url: 'patientInformationPage' }]} />
+                    <NavbarItem icon={<MedicalInformationIcon />} title='Doctores' options={[{ title: 'Create doctor', url: '/doctors/create' }, { title: 'Lista de doctores', url: '/doctors/list' }]} />
                 </li>
                 <li>
-                    <NavbarItem icon={<AirlineSeatReclineExtraIcon />} title='Tratamientos' options={[{ title: 'Pantalla dental', url: 'patientInformationPage' },
-                    { title: 'Balance del paciente', url: 'patientInformationPage' },
-                    { title: 'Reportes', url: 'patientInformationPage' },
-                    { title: 'Reportes de saldo', url: 'patientInformationPage' },
+                    <NavbarItem icon={<AirlineSeatReclineExtraIcon />} title='Tratamientos' options={[
+                        { title: 'Pantalla dental', url: '/treatments/dental' },
+                        { title: 'Balance del paciente', url: '/treatments/balance-patient' },
+                        { title: 'Reportes de saldo', url: '/treatments/reports' },
                     ]}
                     />
                 </li>
                 <li>
-                    <NavbarItem icon={<PointOfSaleIcon />} title='Ingresos y gastos' options={[{ title: 'Perfil', url: 'patientInformationPage' }, { title: 'Mi cuenta', url: 'patientInformationPage' }]} />
+                    <NavbarItem icon={<PointOfSaleIcon />} title='Ingresos y gastos' options={[
+                        { title: 'Perfil', url: '/incoming/my-account' },
+                        { title: 'Mi cuenta', url: '/incoming/profile' }]} />
                 </li>
                 <li>
-                    <NavbarItem icon={<AdminPanelSettingsIcon />} title='Administracion' options={[{ title: 'Informacion de la clinica', url: 'patientInformationPage' },
-                    { title: 'Informacion del usuario', url: 'patientInformationPage' },
-                    { title: 'Lista de usuarios', url: 'patientInformationPage' },
-                    { title: 'Permisos', url: 'patientInformationPage' },
+                    <NavbarItem icon={<AdminPanelSettingsIcon />} title='Administracion' options={[
+                        { title: 'Informacion de la clinica', url: '/administration/clinic-information' },
+                        { title: 'Informacion del usuario', url: '/administration/current-user-information' },
+                        { title: 'Lista de usuarios', url: '/administration/users-list' },
+                        { title: 'Permisos', url: '/administration/permissons' },
                     ]}
                     />
                 </li>
