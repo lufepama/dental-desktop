@@ -1,4 +1,5 @@
-const { ipcRenderer, contextBridge } = require('electron');
+const { ipcRenderer, contextBridge, dialog } = require('electron');
+
 
 contextBridge.exposeInMainWorld('api', {
     // Invoke Methods
@@ -6,6 +7,12 @@ contextBridge.exposeInMainWorld('api', {
     // Send Methods
     testSend: () => ipcRenderer.send('test'),
     openPatientWindow: (data) => ipcRenderer.send('openPatientWindow', data),
-    // Receive Methods
-    testReceive: (callback) => ipcRenderer.on('test-receive', (event, data) => { callback(data) })
+    openDialogPatientCreation: async (firstName) => {
+        const res = await ipcRenderer.invoke('openDialog', firstName)
+        return res
+    },
+    closeWindow: () => ipcRenderer.invoke('close-window'),
+    removeAllListener: () => ipcRenderer.removeAllListeners('openDialog'),
+    testReceive: (callback) => ipcRenderer.on('test-receive', (event, data) => { callback(data) }),
+
 });

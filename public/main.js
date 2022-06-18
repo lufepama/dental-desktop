@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain, dialog, ipcRenderer } = require('electron')
 
 const path = require('path')
 const isDev = require('electron-is-dev')
@@ -139,14 +139,47 @@ function createWindow() {
 
         const win = new BrowserWindow({
             parent: mainWindow,
-            height: 400,
-            width: 600,
+            height: 600,
+            width: 800,
             show: true,
             resizable: false,
             title: titleData,
+            webPreferences: {
+                preload: isDev
+                    ? path.join(app.getAppPath(), './public/preload.js') // Loading it from the public folder for dev
+                    : path.join(app.getAppPath(), './build/preload.js'), // Loading it from the build folder for production
+                worldSafeExecuteJavaScript: true, // If you're using Electron 12+, this should be enabled by default and does not need to be added here.
+                contextIsolation: true,
+            }
         })
         win.loadURL(`http://localhost:3000${urlData}`);
+        if (isDev) {
+            win.webContents.on('did-frame-finish-load', () => {
+                win.webContents.openDevTools();
+            });
+        }
+
+        try {
+            ipcMain.handle('openDialog', async (e, patientName) => {
+                let options = {
+                    buttons: ["Yes", "No"],
+                    message: `Quieres registrar a ${patientName} como nuevo paciente?`
+                }
+                const response = await dialog.showMessageBox(win, options)
+                const hasAcepted = response.response === 0 ? true : false
+                return hasAcepted
+            })
+        } catch (error) {
+
+        }
+
+        ipcMain.handleOnce('close-window', () => {
+            win.close()
+        })
+
     })
+
+
 
 
     const menu = Menu.buildFromTemplate(template)
@@ -172,6 +205,3 @@ app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 
-ipcMain.on('test', () => {
-    console.log('tessst')
-})

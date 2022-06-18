@@ -14,38 +14,41 @@ import ProfileIncoming from './pages/Incoming/ProfileIncoming'
 import BalancePatientTreatment from './pages/Treatments/BalancePatientTreatment'
 import DentalTreatments from './pages/Treatments/DentalTreatments'
 import ReportsTreatments from './pages/Treatments/ReportsTreatments'
+import { PatientsProvider } from './context/patients/PatientsContext'
 
 function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='patients'>
-          <Route path='create' exact element={<CreatePatient />} />
-          <Route path='list' exact element={<Patients />} />
-          <Route />
-        </Route>
-        <Route path='doctors'>
-          <Route path='create' exact element={<CreateDoctor />} />
-          <Route path='list' exact element={<Doctors />} />
-        </Route>
-        <Route path='treatments'>
-          <Route path='balance-patient' exact element={<BalancePatientTreatment />} />
-          <Route path='dental' exact element={<DentalTreatments />} />
-          <Route path='reports' exact element={<ReportsTreatments />} />
-        </Route>
-        <Route path='incoming'>
-          <Route path='my-account' exact element={<MyAccountIncoming />} />
-          <Route path='profile' exact element={<ProfileIncoming />} />
-        </Route>
-        <Route path='administration'>
-          <Route path='clinic-information' exact element={<ClinicInformationAdministration />} />
-          <Route path='permissons' exact element={<PermissonsAdministration />} />
-          <Route path='current-user-information' exact element={<UserInformationAdministration />} />
-          <Route path='users-list' exact element={<UserListAdministration />} />
-        </Route>
-      </Routes>
+      <PatientsProvider>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='patients'>
+            <Route path='create' element={<CreatePatient />} />
+            <Route path='list' element={<Patients />} />
+            <Route />
+          </Route>
+          <Route path='doctors'>
+            <Route path='create' element={<CreateDoctor />} />
+            <Route path='list' element={<Doctors />} />
+          </Route>
+          <Route path='treatments'>
+            <Route path='balance-patient' element={<BalancePatientTreatment />} />
+            <Route path='dental' element={<DentalTreatments />} />
+            <Route path='reports' element={<ReportsTreatments />} />
+          </Route>
+          <Route path='incoming'>
+            <Route path='my-account' element={<MyAccountIncoming />} />
+            <Route path='profile' element={<ProfileIncoming />} />
+          </Route>
+          <Route path='administration'>
+            <Route path='clinic-information' element={<ClinicInformationAdministration />} />
+            <Route path='permissons' element={<PermissonsAdministration />} />
+            <Route path='current-user-information' element={<UserInformationAdministration />} />
+            <Route path='users-list' element={<UserListAdministration />} />
+          </Route>
+        </Routes>
+      </PatientsProvider>
     </BrowserRouter>
   );
 }
