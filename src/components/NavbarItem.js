@@ -8,18 +8,20 @@ import MenuList from '@mui/material/MenuList';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
+import { useNavbar } from '../hooks/navbar/userNavbar'
 
 //icon, title, options
 
 const NavbarItem = ({ icon, title, options }) => {
 
     const [open, setOpen] = useState(false)
+    const { isNavbarActive, setIsNavbarActive } = useNavbar()
     const anchorRef = useRef(null)
     const prevOpen = useRef(open)
-    const navigate = useNavigate()
 
     const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
+        setOpen((prev) => !prev);
+        setIsNavbarActive((prev) => !prev)
     };
 
     const handleClose = (event) => {
@@ -42,9 +44,6 @@ const NavbarItem = ({ icon, title, options }) => {
         }
     }
 
-    const openMenuItemWindow = (menuItem) => {
-        return navigate(menuItem.url)
-    }
 
     useEffect(() => {
         console.log('arr', options)

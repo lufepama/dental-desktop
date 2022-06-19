@@ -11,7 +11,7 @@ contextBridge.exposeInMainWorld('api', {
         const res = await ipcRenderer.invoke('openDialog', firstName)
         return res
     },
-    closeWindow: () => ipcRenderer.invoke('close-window'),
+    closeWindow: () => ipcRenderer.send('close-window'),
     removeAllListener: () => ipcRenderer.removeAllListeners('openDialog'),
     testReceive: (callback) => ipcRenderer.on('test-receive', (event, data) => { callback(data) }),
 

@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
-import PersonPinIcon from '@mui/icons-material/PersonPin';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import AirlineSeatReclineExtraIcon from '@mui/icons-material/AirlineSeatReclineExtra';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
-import Button from '@mui/material/Button';
 import NavbarItem from './NavbarItem';
 
 const Navbar = () => {
@@ -19,6 +18,9 @@ const Navbar = () => {
                 </li>
                 <li>
                     <NavbarItem icon={<MedicalInformationIcon />} title='Doctores' options={[{ title: 'Create doctor', url: '/doctors/create' }, { title: 'Lista de doctores', url: '/doctors/list' }]} />
+                </li>
+                <li>
+                    <NavbarItem icon={<MenuBookIcon />} title='Control de Citas' options={[{ title: 'Crear nueva Cita', url: '/appointments/create' }]} />
                 </li>
                 <li>
                     <NavbarItem icon={<AirlineSeatReclineExtraIcon />} title='Tratamientos' options={[

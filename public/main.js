@@ -172,10 +172,10 @@ function createWindow() {
         } catch (error) {
 
         }
-
-        ipcMain.handleOnce('close-window', () => {
-            win.close()
+        ipcMain.on('close-window', () => {
+            win.destroy()
         })
+
 
     })
 
