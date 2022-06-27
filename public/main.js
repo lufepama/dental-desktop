@@ -139,8 +139,8 @@ function createWindow() {
 
         const win = new BrowserWindow({
             parent: mainWindow,
-            height: 600,
-            width: 800,
+            height: 650,
+            width: 900,
             show: true,
             resizable: false,
             title: titleData,
@@ -159,19 +159,7 @@ function createWindow() {
             });
         }
 
-        try {
-            ipcMain.handle('openDialog', async (e, patientName) => {
-                let options = {
-                    buttons: ["Yes", "No"],
-                    message: `Quieres registrar a ${patientName} como nuevo paciente?`
-                }
-                const response = await dialog.showMessageBox(win, options)
-                const hasAcepted = response.response === 0 ? true : false
-                return hasAcepted
-            })
-        } catch (error) {
 
-        }
         ipcMain.on('close-window', () => {
             win.destroy()
         })
@@ -179,8 +167,20 @@ function createWindow() {
 
     })
 
+    try {
+        ipcMain.handle('openDialog', async (e, text) => {
+            console.log('opendialog ocnected',)
+            let options = {
+                buttons: ["Yes", "No"],
+                message: text
+            }
+            const response = await dialog.showMessageBox(mainWindow, options)
+            const hasAcepted = response.response === 0 ? true : false
+            return hasAcepted
+        })
+    } catch (error) {
 
-
+    }
 
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)

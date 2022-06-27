@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import { Button } from '@mui/material';
-import { usePatient } from '../../hooks/usePatient'
+import { usePatient } from '../../hooks/patients/usePatient'
 import { Alert } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import HeaderWindows from '../../components/HeaderWindows';
+import PatientImageForm from '../../components/PatientImageForm';
+
+
 
 const CreatePatient = () => {
 
     const sexRef = useRef()
-    const { postCreateNewPatient } = usePatient()
+    const { postCreateNewPatient, onUserCreated } = usePatient()
     const [creationMessage, setCreationMessage] = useState({
         isSuccess: false,
         successMessage: ''
@@ -23,17 +26,24 @@ const CreatePatient = () => {
         gender: 'Masculino',
         age: 0,
         address: 'calle',
+        patientImg: null
     })
     const { isSuccess, successMessage } = creationMessage
-    const { firstName, lastName, gender, age, ocupation, address, phoneNumber } = patientData
+    const { firstName, lastName, gender, age, ocupation, address, phoneNumber, patientImg } = patientData
 
     const handleChange = (name) =>
         (event) => {
             setPatientData({ ...patientData, [name]: event.target.value })
         };
 
+    const onFileUpload = (formData) => {
+        onUserCreated(true)
+        setPatientData({ ...patientData, patientImg: formData })
+    }
+
     const handleSubmit = async () => {
-        const response = await window.api.openDialogPatientCreation(firstName)
+        const creationText = `Seguro que quieres registrar a ${firstName} como paciente?`
+        const response = await window.api.openDialogPatientCreation(creationText)
         if (response) { handleCreation() }
     }
 
@@ -41,10 +51,15 @@ const CreatePatient = () => {
         const response = await postCreateNewPatient(patientData)
         const { success } = response
         if (success) {
+            onUserCreated(false)
             setCreationMessage({ isSuccess: true, successMessage: 'Se ha creado el nuevo paciente' })
             setPatientData({ ...patientData, firstName: '', lastName: '', phoneNumber: '', occupation: '', age: 0, address: '' })
         }
     }
+
+    useEffect(() => {
+        onUserCreated(true)
+    }, [])
 
 
     return (
@@ -94,8 +109,8 @@ const CreatePatient = () => {
                         <input className='h-8 border-2 border-gray-600' value={phoneNumber} onChange={handleChange('phoneNumber')} />
                     </div>
                 </div>
-                <div className='w-1/3 bg-red-400'>
-
+                <div className='w-1/3 bg-red-400 p-2'>
+                    <PatientImageForm onFileUpload={onFileUpload} />
                 </div>
             </div>
             <div className='h-1/5 flex flex-row justify-center items-center'>

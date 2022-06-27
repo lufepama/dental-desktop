@@ -7,8 +7,8 @@ contextBridge.exposeInMainWorld('api', {
     // Send Methods
     testSend: () => ipcRenderer.send('test'),
     openPatientWindow: (data) => ipcRenderer.send('openPatientWindow', data),
-    openDialogPatientCreation: async (firstName) => {
-        const res = await ipcRenderer.invoke('openDialog', firstName)
+    openDialogPatientCreation: async (text) => {
+        const res = await ipcRenderer.invoke('openDialog', text)
         return res
     },
     closeWindow: () => ipcRenderer.send('close-window'),

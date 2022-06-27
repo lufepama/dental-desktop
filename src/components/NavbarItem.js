@@ -9,10 +9,13 @@ import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import { useNavbar } from '../hooks/navbar/userNavbar'
+import { useActiveWindow } from '../hooks/activewindow/useActiveWindow';
 
 //icon, title, options
 
 const NavbarItem = ({ icon, title, options }) => {
+
+    const { updateActiveWindow } = useActiveWindow()
 
     const [open, setOpen] = useState(false)
     const { isNavbarActive, setIsNavbarActive } = useNavbar()
@@ -93,8 +96,11 @@ const NavbarItem = ({ icon, title, options }) => {
                                         <MenuItem
                                             key={el.title}
                                             style={{ textTransform: 'none' }}
-                                            onClick={() => { window.api.openPatientWindow({ url: el.url, title: el.title }) }}
-                                        >{el.title}</MenuItem>
+                                            // onClick={() => { window.api.openPatientWindow({ url: el.url, title: el.title }) }}
+                                            onClick={() => { updateActiveWindow(el.title) }}
+                                        >
+                                            {el.title}
+                                        </MenuItem>
                                     )}
                                 </MenuList>
                             </ClickAwayListener>

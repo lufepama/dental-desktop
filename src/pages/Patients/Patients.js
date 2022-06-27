@@ -10,13 +10,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { usePatient } from '../../hooks/usePatient';
+import { usePatient } from '../../hooks/patients/usePatient';
 import { Button } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
-import CloseIcon from '@mui/icons-material/Close';
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import CachedIcon from '@mui/icons-material/Cached';
-import Patient from '../../interconexions/Patient/index'
+import DeleteIcon from '@mui/icons-material/Delete';
+import PanToolAltIcon from '@mui/icons-material/PanToolAlt';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -61,11 +60,18 @@ const rows = [
 
 const Patients = () => {
 
-    const { patientsList } = usePatient()
+    const { patientsList, fetchGetPatientList, handleDeletePatient,
+        handleOpenPatientWindow,
+        handleCloseWindow,
+        isPatienteDeleted,
+        openPatientInformationWindow,
+        updateIsPatientDeleted
+    } = usePatient()
 
-    const handleCloseWindow = () => {
-        Patient.closePatientListWindow()
-    }
+    useEffect(() => {
+        fetchGetPatientList()
+        updateIsPatientDeleted(false)
+    }, [])
 
     return (
         <div className='w-screen h-screen bg-gray-200 flex flex-col'>
@@ -91,13 +97,14 @@ const Patients = () => {
                                     <StyledTableRow key={row._id}>
                                         <StyledTableCell component="th" scope="row">
                                             <div className='flex flex-row'>
-                                                <Button>
+                                                <Button onClick={() => { handleOpenPatientWindow(row) }} >
+                                                    <span className='text-blue-500'><PanToolAltIcon color='inherit' /></span>
+                                                </Button>
+                                                <Button onClick={() => { openPatientInformationWindow() }}>
                                                     <span className='text-blue-500'><CreateIcon color='inherit' /></span>
                                                 </Button>
-                                                <Button>
-                                                    <span className='text-red-600'><CloseIcon color='inherit' /></span>
-
-
+                                                <Button onClick={() => { handleDeletePatient(row._id, row.firstName) }}>
+                                                    <span className='text-red-600'><DeleteIcon color='inherit' /></span>
                                                 </Button>
                                                 {row._id}
                                             </div>
@@ -115,21 +122,13 @@ const Patients = () => {
                         </Table>
                     </TableContainer>
                     {
+                        isPatienteDeleted && <h1>Borrado</h1>
+                    }
+                    {
                         <span>Se han encontrado <span className='font-bold'>{patientsList.length}</span> {patientsList.length > 1 ? 'registros' : 'registro'} </span>
                     }
                 </div>
-                <div className='h-1/6 self-end pr-10'>
-                    <Button >
-                        <span className='text-blue-600'><CachedIcon /></span>
-                        <span className='text-black'>Cerrar</span>
-                    </Button>
-                    <Button onClick={() => handleCloseWindow()} >
-                        <span className='text-red-600'><MeetingRoomIcon /></span>
-                        <span className='text-black'>Cerrar</span>
-                    </Button>
-                </div>
             </div>
-
         </div>
     )
 }

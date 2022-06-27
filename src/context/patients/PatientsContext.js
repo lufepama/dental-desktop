@@ -6,6 +6,8 @@ const Context = createContext({})
 export const PatientsProvider = ({ children }) => {
 
     const [patientsList, setPatientsList] = useState([])
+    const [hasUserCreated, setHasUserCreated] = useState(false)
+    const [isPatienteDeleted, setIsPatientDeleted] = useState(false)
 
     const fetchGetPatientList = async () => {
         const response = await fetch(`${BACKEND_URL}/api/patients/all-patients`, {
@@ -23,7 +25,10 @@ export const PatientsProvider = ({ children }) => {
     }, [])
 
     return (
-        <Context.Provider value={{ patientsList }} >
+        <Context.Provider value={{
+            patientsList, setPatientsList, fetchGetPatientList,
+            hasUserCreated, setHasUserCreated, isPatienteDeleted, setIsPatientDeleted
+        }} >
             {children}
         </Context.Provider>
     )
