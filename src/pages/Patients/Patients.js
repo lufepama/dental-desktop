@@ -11,6 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { usePatient } from '../../hooks/patients/usePatient';
+import { useUpdatePatient } from '../../hooks/patients/useUpdatePatient'
 import { Button } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -67,6 +68,8 @@ const Patients = () => {
         openPatientInformationWindow,
         updateIsPatientDeleted
     } = usePatient()
+    const { onUpdatePatient } = useUpdatePatient()
+
 
     useEffect(() => {
         fetchGetPatientList()
@@ -100,7 +103,9 @@ const Patients = () => {
                                                 <Button onClick={() => { handleOpenPatientWindow(row) }} >
                                                     <span className='text-blue-500'><PanToolAltIcon color='inherit' /></span>
                                                 </Button>
-                                                <Button onClick={() => { openPatientInformationWindow() }}>
+                                                <Button onClick={() => {
+                                                    openPatientInformationWindow(row)
+                                                }}>
                                                     <span className='text-blue-500'><CreateIcon color='inherit' /></span>
                                                 </Button>
                                                 <Button onClick={() => { handleDeletePatient(row._id, row.firstName) }}>

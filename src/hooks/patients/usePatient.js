@@ -5,24 +5,29 @@ import Patient from '../../interconexions/Patient/index'
 
 import { useActiveWindow } from '../activewindow/useActiveWindow';
 import { usePatientHistory } from '../patienthistory/usePatientHistory';
+import { useUpdatePatient } from './useUpdatePatient';
 
 export const usePatient = () => {
 
     const { patientsList, setPatientsList, fetchGetPatientList,
-        hasUserCreated, setHasUserCreated, isPatienteDeleted, setIsPatientDeleted
+        hasUserCreated, setHasUserCreated, isPatienteDeleted, setIsPatientDeleted,
     } = useContext(PatientsContext)
     const { setActiveWindow } = useActiveWindow()
     const { setActivePatientInformation } = usePatientHistory()
+    const { onUpdatePatient } = useUpdatePatient()
 
     const onUserCreated = (value) => {
         setHasUserCreated(value)
     }
 
-    const openPatientInformationWindow = async () => {
+    const openPatientInformationWindow = (patientInfoToUpdate) => {
+        // onUpdatePatient(patientInfoToUpdate)
         const data = {
             url: '/patients/edit',
-            titleData: 'actualizar informacion'
+            titleData: 'actualizar informacion',
+            patientInformation: patientInfoToUpdate
         }
+
         window.api.openPatientWindow(data)
     }
 

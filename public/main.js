@@ -136,14 +136,16 @@ function createWindow() {
 
         const urlData = args.url
         const titleData = args.title
+        const patientInfo = args.patientInformation
 
         const win = new BrowserWindow({
             parent: mainWindow,
             height: 650,
             width: 900,
-            show: true,
             resizable: false,
             title: titleData,
+            modal: true,
+            show: true,
             webPreferences: {
                 preload: isDev
                     ? path.join(app.getAppPath(), './public/preload.js') // Loading it from the public folder for dev
@@ -156,9 +158,10 @@ function createWindow() {
         if (isDev) {
             win.webContents.on('did-frame-finish-load', () => {
                 win.webContents.openDevTools();
+                console.log('daaaa', patientInfo)
+                win.webContents.send('data-to-update', patientInfo)
             });
         }
-
 
         ipcMain.on('close-window', () => {
             win.destroy()

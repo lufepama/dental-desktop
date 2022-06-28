@@ -36,9 +36,8 @@ function App() {
               <AppointmentsProvider>
                 <MainviewProvider>
                   <PatientHistoryProvider>
-
                     <Routes>
-                      <Route path='/' element={<Home />} />
+                      <Route path='/' index element={<Home />} />
                       <Route path='patients'>
                         <Route path='create' element={<CreatePatient />} />
                         <Route path='list' element={<Patients />} />
