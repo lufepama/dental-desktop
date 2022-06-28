@@ -1,21 +1,13 @@
 import React from 'react'
 import { Button, TextField } from '@mui/material';
+import TitleHeading from './TitleHeading';
 
 
-const TitleHeading = () => {
-    return (
-        <div className='mb-5'>
-            <span className='font-bold'>Informacion del paciente</span>
-        </div>
-    )
-}
-
-const UpdatePatientForm = ({ patientInfo }) => {
-
+const UpdatePatientInfoForm = ({ patientInfo }) => {
 
     return (
         <div className='w-3/4 h-full bg-blue-100 pl-3'>
-            <TitleHeading />
+            <TitleHeading title={'Informacion del paciente'} />
             <div className='flex flex-col w-1/2 mb-2'>
                 <label className='mb-2'>Nombre</label>
                 <TextField
@@ -73,4 +65,4 @@ const UpdatePatientForm = ({ patientInfo }) => {
     )
 }
 
-export default UpdatePatientForm
+export default UpdatePatientInfoForm
