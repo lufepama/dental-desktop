@@ -13,6 +13,15 @@ export const useUpdatePatient = () => {
         })
     }
 
+    const putPatientInformation = async (formData) => {
+        const res = await fetch(`${BACKEND_URL}/api/patients/update-patient`, {
+            method: 'PUT',
+            body: JSON.stringify(formData)
+        })
+        console.log('res', res);
+
+    }
+
     const onChangeUpdatePatientForm = (value) => {
         console.log('vallll', value)
         setUpdateInfoForm(value)
@@ -25,7 +34,9 @@ export const useUpdatePatient = () => {
         patientInfoToUpdate,
         loadInfoData,
         updateInfoForm,
-        onChangeUpdatePatientForm
+        onChangeUpdatePatientForm,
+        putPatientInformation,
+        setPatientInfoToUpdate
     }
 
 }

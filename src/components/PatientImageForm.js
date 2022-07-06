@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import { usePatient } from '../hooks/patients/usePatient'
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import UpgradeIcon from '@mui/icons-material/Upgrade';
 
 const Input = styled('input')({
     display: 'none',
 });
 
-const PatientImageForm = ({ onFileUpload }) => {
+const PatientImageForm = ({ onFileUpload, setImage, title }) => {
 
-    const [image, setImage] = useState(null)
-    const { hasUserCreated } = usePatient()
+    // const [image, setImage] = useState(null)
+    // const { hasUserCreated } = usePatient()
 
     const handleFileChange = (e) => {
         try {
@@ -26,7 +26,7 @@ const PatientImageForm = ({ onFileUpload }) => {
     }
 
     return (
-        <div className='w-full h-full bg-gray-300'>
+        <div className='w-full'>
             <form>
                 <label htmlFor="contained-button-file">
                     <Input
@@ -36,12 +36,11 @@ const PatientImageForm = ({ onFileUpload }) => {
                         type="file"
                         onChange={handleFileChange}
                     />
-                    <Button variant="contained" component="span">
-                        Subir foto
+                    <Button variant="contained" component="span" startIcon={<UpgradeIcon />} className='mt-3'>
+                        <span>{title}</span>
                     </Button>
                 </label>
             </form>
-            {hasUserCreated && image?.preview && <img src={image.preview} width='100' height='100' />}
         </div>
     )
 }

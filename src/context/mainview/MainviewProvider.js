@@ -6,9 +6,10 @@ const Context = createContext({})
 export const MainviewProvider = ({ children }) => {
 
     const [activeWindow, setActiveWindow] = useState('')
+    const [activeWindowPatient, setActiveWindowPatient] = useState('')
 
     return (
-        <Context.Provider value={{ activeWindow, setActiveWindow }} >
+        <Context.Provider value={{ activeWindow, setActiveWindow, activeWindowPatient, setActiveWindowPatient }} >
             {children}
         </Context.Provider>
     )

@@ -12,12 +12,12 @@ import PatientImageForm from '../../components/PatientImageForm';
 const CreatePatient = () => {
 
     const sexRef = useRef()
-    const { postCreateNewPatient, onUserCreated } = usePatient()
+    const { postCreateNewPatient, onUserCreated, hasUserCreated } = usePatient()
     const [creationMessage, setCreationMessage] = useState({
         isSuccess: false,
         successMessage: ''
     })
-
+    const [image, setImage] = useState(null)
     const [patientData, setPatientData] = useState({
         firstName: 'Felipe',
         lastName: 'Paz martinez',
@@ -57,9 +57,23 @@ const CreatePatient = () => {
         }
     }
 
+    const handleReset = () => {
+        setPatientData({
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            ocupation: '',
+            gender: '',
+            age: 0,
+            address: '',
+            patientImg: null
+        })
+    }
+
     useEffect(() => {
         onUserCreated(true)
-    }, [])
+        console.log('immm', image)
+    }, [image])
 
 
     return (
@@ -109,14 +123,14 @@ const CreatePatient = () => {
                         <input className='h-8 border-2 border-gray-600' value={phoneNumber} onChange={handleChange('phoneNumber')} />
                     </div>
                 </div>
-                <div className='w-1/3 bg-red-400 p-2'>
-                    <PatientImageForm onFileUpload={onFileUpload} />
+                <div className='w-1/5 bg-red-400 p-2'>
+                    {hasUserCreated && image?.preview && <img src={image.preview} width='100' height='100' className='' />}
+                    <PatientImageForm onFileUpload={onFileUpload} setImage={setImage} title='Subir una foto' />
                 </div>
             </div>
             <div className='h-1/5 flex flex-row justify-center items-center'>
                 <Button onClick={handleSubmit}>Guardar</Button>
-                <Button>Reiniciar</Button>
-                <Button>Cerrar</Button>
+                <Button onClick={handleReset}>Reiniciar</Button>
             </div>
 
         </div>

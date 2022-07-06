@@ -7,13 +7,21 @@ import CreateDoctor from '../../pages/Doctors/CreateDoctor'
 import Doctors from '../../pages/Doctors/Doctors'
 import CreateAppointments from '../../pages/Appointments/CreateAppointments'
 import PatientHistory from '../../pages/PatientHistory/PatientHistory'
+import PatientData from '../../pages/PatientHistory/windows/PatientData'
+import PatientAppointments from '../../pages/PatientHistory/windows/PatientAppointments'
+import PatientFiles from '../../pages/PatientHistory/windows/PatientFiles'
+import PatientTreatments from '../../pages/PatientHistory/windows/PatientTreatments'
 
 export const useActiveWindow = () => {
 
-    const { activeWindow, setActiveWindow } = useContext(MainWindowContext)
+    const { activeWindow, setActiveWindow, activeWindowPatient, setActiveWindowPatient } = useContext(MainWindowContext)
 
     const updateActiveWindow = (windowName) => {
         setActiveWindow(windowName)
+    }
+
+    const updateActiveWindowPatient = (windowName) => {
+        setActiveWindowPatient(windowName)
     }
 
     const displayActiveWindow = () => {
@@ -36,9 +44,23 @@ export const useActiveWindow = () => {
         }
     }
 
+    const displayActiveWindowPatient = () => {
+        switch (activeWindowPatient) {
+            case 'Datos personales':
+                return <PatientData />
+            case 'Imagenes y archivos':
+                return <PatientFiles />
+            case 'Citas':
+                return <PatientAppointments />
+            case 'Planes de tratamiento':
+                return <PatientTreatments />
+        }
+    }
+
     return {
         activeWindow, setActiveWindow,
-        updateActiveWindow, displayActiveWindow
+        updateActiveWindow, displayActiveWindow,
+        updateActiveWindowPatient, displayActiveWindowPatient
     }
 
 }
