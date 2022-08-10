@@ -8,6 +8,7 @@ export const PatientsProvider = ({ children }) => {
     const [patientsList, setPatientsList] = useState([])
     const [hasUserCreated, setHasUserCreated] = useState(false)
     const [isPatienteDeleted, setIsPatientDeleted] = useState(false)
+    const [isPatientUpdated, setIsPatientUpdated] = useState(false)
     const [patientInfoToUpdate, setPatientInfoToUpdate] = useState({})
     const [updateInfoForm, setUpdateInfoForm] = useState('patient')
 
@@ -31,7 +32,8 @@ export const PatientsProvider = ({ children }) => {
             patientsList, setPatientsList, fetchGetPatientList,
             hasUserCreated, setHasUserCreated, isPatienteDeleted, setIsPatientDeleted,
             patientInfoToUpdate, setPatientInfoToUpdate,
-            updateInfoForm, setUpdateInfoForm
+            updateInfoForm, setUpdateInfoForm,
+            isPatientUpdated, setIsPatientUpdated
         }} >
             {children}
         </Context.Provider>

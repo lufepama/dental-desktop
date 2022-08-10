@@ -6,6 +6,7 @@ import Patient from '../../interconexions/Patient/index'
 import { useActiveWindow } from '../activewindow/useActiveWindow';
 import { usePatientHistory } from '../patienthistory/usePatientHistory';
 import { useUpdatePatient } from './useUpdatePatient';
+import { managePatientFormData } from '../../helpers/PatientHistory/index'
 
 export const usePatient = () => {
 
@@ -14,21 +15,14 @@ export const usePatient = () => {
     } = useContext(PatientsContext)
     const { setActiveWindow } = useActiveWindow()
     const { setActivePatientInformation } = usePatientHistory()
-    const { onUpdatePatient } = useUpdatePatient()
+    const { setPatientInfoToUpdate } = useUpdatePatient()
 
     const onUserCreated = (value) => {
         setHasUserCreated(value)
     }
 
-    const openPatientInformationWindow = (patientInfoToUpdate) => {
-        // onUpdatePatient(patientInfoToUpdate)
-        const data = {
-            url: '/patients/edit',
-            titleData: 'actualizar informacion',
-            patientInformation: patientInfoToUpdate
-        }
-
-        window.api.openPatientWindow(data)
+    const openPatientHistoryWindow = (patientInfoToUpdate) => {
+        setPatientInfoToUpdate(patientInfoToUpdate)
     }
 
     const updateIsPatientDeleted = (value) => {
@@ -56,16 +50,11 @@ export const usePatient = () => {
         return {}
     }
 
+
+
     const postCreateNewPatient = async (patientData) => {
 
-        let formInfoData = new FormData()
-        formInfoData.append('firstName', patientData.firstName)
-        formInfoData.append('lastName', patientData.lastName)
-        formInfoData.append('phoneNumber', patientData.phoneNumber)
-        formInfoData.append('ocupation', patientData.ocupation)
-        formInfoData.append('gender', patientData.gender)
-        formInfoData.append('address', patientData.address)
-        formInfoData.append('patientImg', patientData.patientImg)
+        const formInfoData = managePatientFormData(patientData)
         const response = await fetch(`${BACKEND_URL}/api/patients/create`, {
             method: 'POST',
             headers: {
@@ -79,6 +68,7 @@ export const usePatient = () => {
     }
 
     const handleOpenPatientWindow = (patientData) => {
+        setPatientInfoToUpdate(patientData)
         setActiveWindow('Patient history')
         setActivePatientInformation(patientData)
     }
@@ -97,7 +87,7 @@ export const usePatient = () => {
         handleCloseWindow,
         isPatienteDeleted,
         updateIsPatientDeleted,
-        openPatientInformationWindow
+        openPatientHistoryWindow,
     }
 
 }

@@ -15,13 +15,13 @@ const Navbar = () => {
         <div className='bg-blue-300 h-16 flex flex-row items-center'>
             <ul className='flex flex-row w-full justify-between pl-10 pr-10'>
                 <li>
-                    <NavbarItem icon={<AccountBoxIcon />} title='Pacientes' options={[{ title: 'Informacion del paciente', url: '/patients/create' }, { title: 'Lista de pacientes', url: '/patients/list' }]} />
+                    <NavbarItem icon={<AccountBoxIcon />} title='Pacientes' options={[{ title: 'Crear nuevo paciente', url: '/patients/create' }, { title: 'Lista de pacientes', url: '/patients/list' }]} />
                 </li>
                 <li>
                     <NavbarItem icon={<MedicalInformationIcon />} title='Doctores' options={[{ title: 'Create doctor', url: '/doctors/create' }, { title: 'Lista de doctores', url: '/doctors/list' }]} />
                 </li>
                 <li>
-                    <NavbarItem icon={<MenuBookIcon />} title='Control de Citas' options={[{ title: 'Crear nueva Cita', url: '/appointments/create' }]} />
+                    <NavbarItem icon={<MenuBookIcon />} title='Control de Citas' options={[{ title: 'Crear nueva Cita', url: '/appointments/create' }, { title: 'Agenda', url: '/appointments/agenda' }]} />
                 </li>
                 <li>
                     <NavbarItem icon={<AirlineSeatReclineExtraIcon />} title='Tratamientos' options={[

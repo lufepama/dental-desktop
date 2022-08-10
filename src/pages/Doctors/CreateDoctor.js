@@ -4,7 +4,7 @@ import { useDoctor } from '../../hooks/doctors/useDoctors';
 import { Button } from '@mui/material';
 import { Alert } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
-import HeaderWindows from '../../components/HeaderWindows';
+import HeaderWindows from '../../components/shared/HeaderWindows';
 
 
 const CreateDoctor = () => {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Navbar from '../../components/Navbar'
+import Navbar from '../../components/shared/Navbar'
 import { useActiveWindow } from '../../hooks/activewindow/useActiveWindow'
 
 const Home = () => {

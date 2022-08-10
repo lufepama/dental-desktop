@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import HeaderWindows from '../../components/HeaderWindows'
+import HeaderWindows from '../../components/shared/HeaderWindows'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { useDoctor } from '../../hooks/doctors/useDoctors'
 import Calendar from 'react-calendar';

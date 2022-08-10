@@ -2,41 +2,55 @@ import { formControlUnstyledClasses } from '@mui/base'
 import { useContext, useEffect } from 'react'
 import { BACKEND_URL } from '../../backend'
 import PatientsContext from '../../context/patients/PatientsContext'
+import { managePatientFormData } from '../../helpers/PatientHistory/index'
 
 export const useUpdatePatient = () => {
 
-    const { patientInfoToUpdate, setPatientInfoToUpdate, updateInfoForm, setUpdateInfoForm } = useContext(PatientsContext)
+    const { patientInfoToUpdate, setPatientInfoToUpdate,
+        updateInfoForm, setUpdateInfoForm,
+        isPatientUpdated, setIsPatientUpdated
+    } = useContext(PatientsContext)
 
-    const loadInfoData = async () => {
-        window.api.loadUpdateInfor((data) => {
-            setPatientInfoToUpdate(data)
-        })
-    }
+    const putPatientInformation = async (updatedData) => {
+        const formUpdatedData = managePatientFormData(updatedData)
 
-    const putPatientInformation = async (formData) => {
         const res = await fetch(`${BACKEND_URL}/api/patients/update-patient`, {
             method: 'PUT',
-            body: JSON.stringify(formData)
+            body: formUpdatedData
         })
-        console.log('res', res);
-
+        const resJson = await res.json()
+        return resJson
     }
+
+    const onSaveUpdatedPatientInformation = async (updatedPatientInformation) => {
+        const creationText = `Seguro que quieres actualizar la iformacion del paciente ${patientInfoToUpdate.firstName}?`
+        const resWindow = await window.api.openDialogPatientCreation(creationText)
+        if (resWindow) {
+            const res = await putPatientInformation(updatedPatientInformation)
+            if (res.success) {
+                console.log({ res });
+                setIsPatientUpdated(true)
+            }
+        }
+    }
+
 
     const onChangeUpdatePatientForm = (value) => {
         console.log('vallll', value)
         setUpdateInfoForm(value)
     }
-    useEffect(() => {
-        loadInfoData()
-    }, [])
+
+    const resetIsPatientUpdated = () => setIsPatientUpdated(false)
 
     return {
         patientInfoToUpdate,
-        loadInfoData,
         updateInfoForm,
+        isPatientUpdated,
         onChangeUpdatePatientForm,
         putPatientInformation,
-        setPatientInfoToUpdate
+        setPatientInfoToUpdate,
+        onSaveUpdatedPatientInformation,
+        resetIsPatientUpdated
     }
 
 }

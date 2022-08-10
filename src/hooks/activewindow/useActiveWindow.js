@@ -11,6 +11,7 @@ import PatientData from '../../pages/PatientHistory/windows/PatientData'
 import PatientAppointments from '../../pages/PatientHistory/windows/PatientAppointments'
 import PatientFiles from '../../pages/PatientHistory/windows/PatientFiles'
 import PatientTreatments from '../../pages/PatientHistory/windows/PatientTreatments'
+import AgendaView from '../../pages/Appointments/AgendaView'
 
 export const useActiveWindow = () => {
 
@@ -25,8 +26,9 @@ export const useActiveWindow = () => {
     }
 
     const displayActiveWindow = () => {
+
         switch (activeWindow) {
-            case 'Informacion del paciente':
+            case 'Crear nuevo paciente':
                 console.log('case')
                 return (<CreatePatient />)
             case 'Lista de pacientes':
@@ -39,9 +41,12 @@ export const useActiveWindow = () => {
                 return <CreateAppointments />
             case 'Patient history':
                 return <PatientHistory />
+            case 'Agenda':
+                return <AgendaView />
             default:
-                console.log('nana')
+                return null
         }
+
     }
 
     const displayActiveWindowPatient = () => {
@@ -54,6 +59,8 @@ export const useActiveWindow = () => {
                 return <PatientAppointments />
             case 'Planes de tratamiento':
                 return <PatientTreatments />
+            default:
+                return <PatientData />
         }
     }
 

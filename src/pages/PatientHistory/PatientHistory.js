@@ -6,6 +6,7 @@ import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import ActionFieldHeader from '../../components/patientprofile/ActionFieldHeader'
 import Avatar from '@mui/material/Avatar';
 import { useActiveWindow } from '../../hooks/activewindow/useActiveWindow'
+import HeaderHistory from '../../components/patienthistory/HeaderHistory'
 
 const SubheaderSection = ({ title }) => {
     return (
@@ -19,7 +20,7 @@ const PatientHistory = () => {
 
     const { currentPatientInformation } = usePatientHistory()
     const { displayActiveWindowPatient, updateActiveWindowPatient } = useActiveWindow()
-    const [activeTitle, setActiveTitle] = useState('')
+    const [activeTitle, setActiveTitle] = useState('Datos personales')
 
     const onSubmitHeaderBottom = (title) => {
         if (title) {
@@ -34,10 +35,10 @@ const PatientHistory = () => {
     }, [])
 
     return (
-        <div className='h-screen w-screen bg-red-100 pl-20 pr-20 pt-10 z-10'>
-            <div className='flex flex-row h-full w-full bg-gray-100'>
-                <div className='flex flex-col w-1/5 h-full bg-green-200'>
-                    <div className='flex flex-row items-center w-full h-32 bg-red-200'>
+        <div className='h-screen w-screen pl-20 pr-20 pt-10 z-10'>
+            <div className='flex flex-row h-full w-full'>
+                <div className='flex flex-col w-1/5 h-full '>
+                    <div className='flex flex-row items-center w-full h-32'>
                         <Avatar sx={{ height: '120px', width: '120px', zIndex: '0' }} alt={`${currentPatientInformation.firstName}`} src={currentPatientInformation.profileImg} />
                         <span className='ml-3 font-bold'>{currentPatientInformation.firstName} {currentPatientInformation.lastName}</span>
                     </div>
@@ -59,10 +60,8 @@ const PatientHistory = () => {
                     </div>
                 </div>
                 <div className='flex flex-col h-full w-4/5 '>
-                    <div className='flex flex-row justify-center h-12 w-full bg-red-200'>
-                        {activeTitle}
-                    </div>
-                    <div className='h-full bg-gray-200'>
+                    <HeaderHistory title={activeTitle} />
+                    <div className='h-full'>
                         {displayActiveWindowPatient()}
                     </div>
                 </div>

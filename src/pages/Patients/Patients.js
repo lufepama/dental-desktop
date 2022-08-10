@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import HeaderWindows from '../../components/HeaderWindows'
+import HeaderWindows from '../../components/shared/HeaderWindows'
 import ListAltIcon from '@mui/icons-material/ListAlt';
 //Table Imports
 import { styled } from '@mui/material/styles';
@@ -13,7 +13,6 @@ import Paper from '@mui/material/Paper';
 import { usePatient } from '../../hooks/patients/usePatient';
 import { useUpdatePatient } from '../../hooks/patients/useUpdatePatient'
 import { Button } from '@mui/material';
-import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PanToolAltIcon from '@mui/icons-material/PanToolAlt';
 
@@ -55,7 +54,6 @@ const rows = [
     createData('Cupcake', 305, 3.7, 67, 4.3),
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
-
 
 
 
@@ -102,11 +100,6 @@ const Patients = () => {
                                             <div className='flex flex-row'>
                                                 <Button onClick={() => { handleOpenPatientWindow(row) }} >
                                                     <span className='text-blue-500'><PanToolAltIcon color='inherit' /></span>
-                                                </Button>
-                                                <Button onClick={() => {
-                                                    openPatientInformationWindow(row)
-                                                }}>
-                                                    <span className='text-blue-500'><CreateIcon color='inherit' /></span>
                                                 </Button>
                                                 <Button onClick={() => { handleDeletePatient(row._id, row.firstName) }}>
                                                     <span className='text-red-600'><DeleteIcon color='inherit' /></span>

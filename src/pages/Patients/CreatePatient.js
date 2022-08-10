@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { usePatient } from '../../hooks/patients/usePatient'
 import { Alert } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
-import HeaderWindows from '../../components/HeaderWindows';
+import HeaderWindows from '../../components/shared/HeaderWindows';
 import PatientImageForm from '../../components/PatientImageForm';
 
 
@@ -72,13 +72,12 @@ const CreatePatient = () => {
 
     useEffect(() => {
         onUserCreated(true)
-        console.log('immm', image)
     }, [image])
 
 
     return (
         <div className='w-screen h-screen bg-gray-200'>
-            <HeaderWindows icon={<SupervisedUserCircleIcon className='text-gray-100' fontSize='inherit' />} title='Informacion del paciente' />
+            <HeaderWindows icon={<SupervisedUserCircleIcon className='text-gray-100' fontSize='inherit' />} title='Crear nuevo paciente' />
             {
                 isSuccess && (
                     <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">

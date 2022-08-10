@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useUpdatePatient } from '../../hooks/patients/useUpdatePatient'
 import Avatar from '@mui/material/Avatar';
-import HeaderWindows from '../../components/HeaderWindows';
+import HeaderWindows from '../../components/shared/HeaderWindows';
 import UpdateIcon from '@mui/icons-material/Update';
 import UpdatePatientInfoForm from '../../components/patientprofile/UpdatePatientInfoForm';
 import ActionFieldHeader from '../../components/patientprofile/ActionFieldHeader';

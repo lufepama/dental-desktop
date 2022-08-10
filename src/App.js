@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home/Home';
 import Patients from './pages/Patients/Patients'
@@ -24,6 +23,7 @@ import { MainviewProvider } from './context/mainview/MainviewProvider'
 import PatientHistory from './pages/PatientHistory/PatientHistory';
 import { PatientHistoryProvider } from './context/patienthistory/PatientHistoryProvider';
 import EditPatient from './pages/Patients/EditPatient';
+import AgendaView from './pages/Appointments/AgendaView';
 
 function App() {
 
@@ -50,6 +50,7 @@ function App() {
                       </Route>
                       <Route path='appointments'>
                         <Route path='create' element={<CreateAppointments />} />
+                        <Route path='agenda' element={<AgendaView />} />
                       </Route>
                       <Route path='treatments'>
                         <Route path='balance-patient' element={<BalancePatientTreatment />} />

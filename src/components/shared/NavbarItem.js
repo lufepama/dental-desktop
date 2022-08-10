@@ -8,8 +8,8 @@ import MenuList from '@mui/material/MenuList';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
-import { useNavbar } from '../hooks/navbar/userNavbar'
-import { useActiveWindow } from '../hooks/activewindow/useActiveWindow';
+import { useNavbar } from '../../hooks/navbar/userNavbar'
+import { useActiveWindow } from '../../hooks/activewindow/useActiveWindow';
 
 //icon, title, options
 
@@ -18,7 +18,7 @@ const NavbarItem = ({ icon, title, options }) => {
     const { updateActiveWindow } = useActiveWindow()
 
     const [open, setOpen] = useState(false)
-    const { isNavbarActive, setIsNavbarActive } = useNavbar()
+    const { setIsNavbarActive } = useNavbar()
     const anchorRef = useRef(null)
     const prevOpen = useRef(open)
 
