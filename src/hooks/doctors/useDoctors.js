@@ -17,6 +17,7 @@ export const useDoctor = () => {
 
         const resJson = await response.json()
         return resJson
+
     }
 
 

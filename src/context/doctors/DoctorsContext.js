@@ -15,11 +15,13 @@ export const DoctorsProvider = ({ children }) => {
             },
         })
         const resJson = await response.json()
+        console.log(resJson?.data);
         setDoctorsList(resJson?.data)
     }
 
     useEffect(() => {
         fetchGetDoctorsList()
+
     }, [])
 
     return (

@@ -5,9 +5,11 @@ const Context = createContext({})
 
 export const AppointmentsProvider = ({ children }) => {
 
+    const [agenda, setAgenda] = useState({})
+    const [appointmentsAgenda, setAppointmentsAgenda] = useState([])
 
     return (
-        <Context.Provider value={{}} >
+        <Context.Provider value={{ agenda, setAgenda, appointmentsAgenda, setAppointmentsAgenda }} >
             {children}
         </Context.Provider>
     )

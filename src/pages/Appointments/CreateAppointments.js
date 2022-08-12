@@ -74,7 +74,6 @@ const CreateAppointments = () => {
         fetchGetPatientList()
     }, [])
 
-
     return (
         <div className='flex flex-col w-screen h-screen bg-gray-200'>
             <HeaderWindows icon={<MenuBookIcon className='text-gray-100' fontSize='inherit' />} title='Crear nueva cita' />
