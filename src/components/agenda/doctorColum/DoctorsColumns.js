@@ -8,6 +8,7 @@ const DoctorsColumns = () => {
 
     return (
         <>
+
             {
                 appointmentsAgenda.map(el =>
                     <td key={el._id} >
@@ -20,7 +21,7 @@ const DoctorsColumns = () => {
                                 </td>
                             </tr>
                         </th>
-                        <DoctorCells data={el.hoursAppointments} />
+                        <DoctorCells doctorAgendaId={el._id} data={el.hoursAppointments} />
                     </td>
                 )
             }

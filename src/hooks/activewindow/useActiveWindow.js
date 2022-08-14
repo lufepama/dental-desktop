@@ -17,8 +17,8 @@ export const useActiveWindow = () => {
 
     const { activeWindow, setActiveWindow, activeWindowPatient, setActiveWindowPatient } = useContext(MainWindowContext)
 
-    const updateActiveWindow = (windowName) => {
-        setActiveWindow(windowName)
+    const updateActiveWindow = (windowData) => {
+        setActiveWindow(windowData.title)
     }
 
     const updateActiveWindowPatient = (windowName) => {

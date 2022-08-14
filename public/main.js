@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog, ipcRenderer } = require('electron')
+const { app, BrowserWindow, Menu, MenuItem, ipcMain, dialog, ipcRenderer } = require('electron')
+const onRightClickAgenda = require('./actions/agenda/RightClickAgenda.js')
 
 const path = require('path')
 const isDev = require('electron-is-dev')
@@ -133,7 +134,7 @@ function createWindow() {
 
 
     ipcMain.on('openPatientWindow', (events, args) => {
-
+        console.log('open patientasd')
         const urlData = args.url
         const titleData = args.title
 
@@ -153,18 +154,13 @@ function createWindow() {
                 contextIsolation: true,
             }
         })
+
         win.loadURL(`http://localhost:3000${urlData}`);
         if (isDev) {
             win.webContents.on('did-frame-finish-load', () => {
                 win.webContents.openDevTools();
             });
         }
-
-        ipcMain.on('close-window', () => {
-            win.destroy()
-        })
-
-
     })
 
     try {
@@ -181,6 +177,11 @@ function createWindow() {
     } catch (error) {
 
     }
+
+    console.log('en agenda desde back')
+    //Agenda
+
+
 
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)

@@ -38,7 +38,7 @@ const PatientCreationForm = ({ fromAutocomplete, patientData, handleSeletedPatie
                         <select disabled={fromAutocomplete} id="sex" name="sex" ref={genderRef} onChange={handleChange('gender')} value={gender}>
                             <option value="none" hidden>Genero</option>
                             <option value="Masculino">Masculino</option>
-                            <option value="Femenino" selected>Femenino</option>
+                            <option value="Femenino">Femenino</option>
                         </select>
                     </div>
                     <div className='flex flex-col'>

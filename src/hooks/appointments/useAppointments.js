@@ -21,7 +21,6 @@ export const useAppointments = () => {
     }
 
     const getAgenda = async (week = '43') => {
-        console.log('estree')
 
         const res = await fetch(`${BACKEND_URL}/api/appointment/get-agenda/${week}`, {
             method: 'GET',

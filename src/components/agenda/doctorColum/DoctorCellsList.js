@@ -2,13 +2,14 @@ import React from 'react'
 import Cell from './Cell'
 
 
-const DoctorCells = ({ data }) => {
+const DoctorCells = ({ data, doctorAgendaId }) => {
 
     return (
         <>
             {
-                data.map(el =>
-                    <Cell data={el} />
+                data.map(el => {
+                    return <Cell key={el._id} data={el} doctorAgendaId={doctorAgendaId} />
+                }
                 )
             }
         </>

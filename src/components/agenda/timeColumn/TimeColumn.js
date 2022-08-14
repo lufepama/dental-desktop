@@ -21,7 +21,7 @@ const TimeColumn = () => {
         <>
             {
                 hours.map(el => (
-                    <table key={el} className='h-16 w-12 bg-red-300 border-b '>
+                    <table key={el} className='h-16 w-12 bg-red-300 border-b'>
                         <tbody>
                             <tr>
                                 <td className={`${el.substring(3, 5) === '00' ? 'font-bold' : null}`} >{el}</td>

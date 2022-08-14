@@ -97,7 +97,7 @@ const NavbarItem = ({ icon, title, options }) => {
                                             key={el.title}
                                             style={{ textTransform: 'none' }}
                                             // onClick={() => { window.api.openPatientWindow({ url: el.url, title: el.title }) }}
-                                            onClick={() => { updateActiveWindow(el.title) }}
+                                            onClick={() => { updateActiveWindow(el) }}
                                         >
                                             {el.title}
                                         </MenuItem>
