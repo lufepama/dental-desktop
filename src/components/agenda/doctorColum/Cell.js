@@ -3,9 +3,11 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { useAppointments } from '../../../hooks/appointments/useAppointments';
 
 const Cell = ({ data, doctorAgendaId }) => {
 
+    const { handleUpdateOpen, updateAppointementDataToBeUpdated } = useAppointments()
 
     const onHeighCellCorrection = () => {
 
@@ -44,29 +46,44 @@ const Cell = ({ data, doctorAgendaId }) => {
         }
     }
 
+    const onEditAppointment = () => {
+        handleUpdateOpen()
+        updateAppointementDataToBeUpdated(data)
+    }
+
+    const onAddAppointment = () => {
+        handleUpdateOpen()
+        updateAppointementDataToBeUpdated(data)
+    }
+    const onDeleteAppointment = () => {
+        handleUpdateOpen()
+        updateAppointementDataToBeUpdated(data)
+    }
+
+
     return (
         <>
             {
                 data.isDisplayed
                     ?
-                    <div className={onHeighCellCorrection()} onClick={() => { console.log('pressed', doctorAgendaId) }}>
+                    <div className={onHeighCellCorrection()}>
                         <div className='relative flex flex-col'>
                             <div className='absolute bottom-3 right-0 flex flex-row'>
                                 {
                                     data.isOccupated
                                         ? (
                                             <>
-                                                <IconButton color="secondary" aria-label="add an alarm">
+                                                <IconButton color="secondary" aria-label="add an alarm" onClick={() => { onDeleteAppointment() }}>
                                                     <DeleteIcon />
                                                 </IconButton>
-                                                <IconButton color="secondary" aria-label="add an alarm">
+                                                <IconButton color="secondary" aria-label="add an alarm" onClick={() => { onEditAppointment() }}>
                                                     <EditIcon />
                                                 </IconButton>
                                             </>
 
                                         )
                                         : (
-                                            <IconButton color="secondary" aria-label="add an alarm">
+                                            <IconButton color="secondary" aria-label="add an alarm" onClick={() => { onAddAppointment() }}>
                                                 <AddIcon />
                                             </IconButton>
                                         )

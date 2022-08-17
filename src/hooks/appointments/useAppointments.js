@@ -4,7 +4,11 @@ import ApointmentContext from '../../context/appointments/ApointmentsContext'
 
 export const useAppointments = () => {
 
-    const { agenda, setAgenda, appointmentsAgenda, setAppointmentsAgenda } = useContext(ApointmentContext)
+    const { agenda, setAgenda,
+        appointmentsAgenda, setAppointmentsAgenda,
+        updateOpen, setUpdateOpen,
+        appointmentToUpdate, setAppointmentToUpdate
+    } = useContext(ApointmentContext)
 
 
     const postCreateNewAppointment = async (appointmentData) => {
@@ -20,7 +24,7 @@ export const useAppointments = () => {
         return resJson
     }
 
-    const getAgenda = async (week = '43') => {
+    const getAgenda = async (week = '34') => {
 
         const res = await fetch(`${BACKEND_URL}/api/appointment/get-agenda/${week}`, {
             method: 'GET',
@@ -33,15 +37,29 @@ export const useAppointments = () => {
         return resJson
     }
 
+    const handleUpdateOpen = () => setUpdateOpen(true)
+    const handleUpdateClose = () => setUpdateOpen(false)
+
+    const updateAppointementDataToBeUpdated = (dataToUpdate) => {
+        console.log(dataToUpdate);
+    }
+
+
+
     useEffect(() => {
         getAgenda()
     }, [])
 
     return {
+        agenda,
+        appointmentsAgenda,
+        updateOpen,
+
+        handleUpdateOpen,
+        handleUpdateClose,
         postCreateNewAppointment,
         getAgenda,
-        agenda,
-        appointmentsAgenda
+        updateAppointementDataToBeUpdated
     }
 
 }

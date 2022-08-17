@@ -4,7 +4,9 @@ import DoctorCells from './DoctorCellsList'
 
 const DoctorsColumns = () => {
 
-    const { agenda, appointmentsAgenda } = useAppointments()
+    const { appointmentsAgenda } = useAppointments()
+
+    console.log({ appointmentsAgenda })
 
     return (
         <>

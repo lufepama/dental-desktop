@@ -138,9 +138,7 @@ const CreateAppointments = () => {
                             : <PatientCreationForm fromAutocomplete={false} handleSeletedPatientInput={handleSeletedPatientInput} />
                     }
                     <div>
-
                     </div>
-
                 </div>
             </div>
             <div className='flex flex-row justify-center'>

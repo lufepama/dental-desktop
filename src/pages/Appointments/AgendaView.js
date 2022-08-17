@@ -4,7 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es'
 import Button from '@mui/material/Button';
 import AgendaTable from '../../components/agenda/AgendaTable'
-
+import { useAppointments } from '../../hooks/appointments/useAppointments'
+import UpdateAppointmentModal from '../../components/agenda/modals/UpdateAppointmentModal';
 
 registerLocale('es', es)
 
@@ -27,27 +28,33 @@ const AgendaView = () => {
     }
 
     return (
-        <div className='w-full h-full flex flex-row bg-gray-200'>
-            <div className='w-1/5 flex flex-col items-center bg-red-100 p-10'>
-                <div className='w-2/3 flex flex-col items-center bg-gray-100 rounded-lg shadow-md'>
-                    {getDayTime()}
+        <>
+
+            <div className='w-full h-full flex flex-row bg-gray-200'>
+
+                <div className='w-1/5 flex flex-col items-center bg-red-100 p-10'>
+                    <div className='w-2/3 flex flex-col items-center bg-gray-100 rounded-lg shadow-md'>
+                        {getDayTime()}
+                    </div>
+                    <div className='mt-10'>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            inline
+                            locale='es'
+                        />
+                    </div>
+                    <Button variant="contained" component="span" color='success' className='mt-3'>
+                        <span>Seleccionar dia</span>
+                    </Button>
                 </div>
-                <div className='mt-10'>
-                    <DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        inline
-                        locale='es'
-                    />
+                <div className='w-4/5 flex flex-row bg-gray-300 p-10'>
+                    <AgendaTable />
                 </div>
-                <Button variant="contained" component="span" color='success' className='mt-3'>
-                    <span>Seleccionar dia</span>
-                </Button>
+                <UpdateAppointmentModal />
             </div>
-            <div className='w-4/5 flex flex-row bg-gray-300 p-10'>
-                <AgendaTable />
-            </div>
-        </div>
+        </>
+
     )
 }
 

@@ -21,7 +21,6 @@ const AgendaTable = () => {
                 <DoctorsColumns />
             </table>
         </div>
-
     )
 }
 
