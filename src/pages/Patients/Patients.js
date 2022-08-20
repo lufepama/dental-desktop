@@ -76,7 +76,9 @@ const Patients = () => {
 
     return (
         <div className='w-screen h-screen bg-gray-200 flex flex-col'>
-            <HeaderWindows icon={<ListAltIcon className='text-gray-100' fontSize='inherit' />} title='Lista de pacientes' />
+            <div className='w-full h-16'>
+                <HeaderWindows icon={<ListAltIcon className='text-gray-100' fontSize='inherit' />} title='Lista de pacientes' />
+            </div>
             <div className='h-full flex flex-col justify-between overflow-y-hidden'>
                 <div className='h-1/2'>
                     <TableContainer component={Paper} className='h-full' >

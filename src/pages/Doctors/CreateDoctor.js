@@ -50,7 +50,10 @@ const CreateDoctor = () => {
 
     return (
         <div className='w-screen h-screen bg-gray-200'>
-            <HeaderWindows icon={<BloodtypeIcon className='text-gray-100' fontSize='inherit' />} title='Informacion del doctor' />
+            <div className='w-full h-16'>
+                <HeaderWindows icon={<BloodtypeIcon className='text-gray-100' fontSize='inherit' />} title='Informacion del doctor' />
+
+            </div>
             {
                 isSuccess && (
                     <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">

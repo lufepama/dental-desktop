@@ -4,6 +4,8 @@ import Cell from './Cell'
 
 const DoctorCells = ({ data, doctorAgendaId }) => {
 
+
+
     return (
         <>
             {

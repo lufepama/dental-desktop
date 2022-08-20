@@ -22,8 +22,8 @@ const PatientCreationForm = ({ fromAutocomplete, patientData, handleSeletedPatie
         };
 
     return (
-        <div className='bg-gray-200'>
-            <div className='w-full h-2/3 flex flex-row p-5'>
+        <div className='bg-gray-200 h-full'>
+            <div className='w-full h-2/3 flex flex-row '>
                 <div className='w-1/2'>
                     <div className='flex flex-col'>
                         <span>Nombre del paciente</span>

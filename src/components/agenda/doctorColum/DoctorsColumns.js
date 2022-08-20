@@ -6,7 +6,6 @@ const DoctorsColumns = () => {
 
     const { appointmentsAgenda } = useAppointments()
 
-    console.log({ appointmentsAgenda })
 
     return (
         <>

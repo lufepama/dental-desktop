@@ -77,7 +77,10 @@ const CreatePatient = () => {
 
     return (
         <div className='w-screen h-screen bg-gray-200'>
-            <HeaderWindows icon={<SupervisedUserCircleIcon className='text-gray-100' fontSize='inherit' />} title='Crear nuevo paciente' />
+            <div className='w-full h-16'>
+                <HeaderWindows icon={<SupervisedUserCircleIcon className='text-gray-100' fontSize='inherit' />} title='Crear nuevo paciente' />
+
+            </div>
             {
                 isSuccess && (
                     <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">

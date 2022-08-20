@@ -7,7 +7,7 @@ import { useAppointments } from '../../../hooks/appointments/useAppointments';
 
 const Cell = ({ data, doctorAgendaId }) => {
 
-    const { handleUpdateOpen, updateAppointementDataToBeUpdated } = useAppointments()
+    const { handleUpdateOpen, updateAppointementDataToBeUpdated, getArrayOfCellsInRangedAppointment } = useAppointments()
 
     const onHeighCellCorrection = () => {
 
@@ -53,13 +53,14 @@ const Cell = ({ data, doctorAgendaId }) => {
 
     const onAddAppointment = () => {
         handleUpdateOpen()
-        updateAppointementDataToBeUpdated(data)
+        updateAppointementDataToBeUpdated(data, doctorAgendaId)
+        getArrayOfCellsInRangedAppointment()
     }
+
     const onDeleteAppointment = () => {
         handleUpdateOpen()
         updateAppointementDataToBeUpdated(data)
     }
-
 
     return (
         <>

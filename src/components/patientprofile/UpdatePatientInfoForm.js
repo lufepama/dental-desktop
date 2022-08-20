@@ -1,6 +1,5 @@
 import React from 'react'
 import { Alert, Button, TextField } from '@mui/material';
-import TitleHeading from './TitleHeading';
 import { useUpdatePatient } from '../../hooks/patients/useUpdatePatient';
 
 

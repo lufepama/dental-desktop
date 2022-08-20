@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es'
 import Button from '@mui/material/Button';
 import AgendaTable from '../../components/agenda/AgendaTable'
 import { useAppointments } from '../../hooks/appointments/useAppointments'
-import UpdateAppointmentModal from '../../components/agenda/modals/UpdateAppointmentModal';
+import CreateAppointmentModal from '../../components/agenda/modals/CreateAppointmentModal';
+import { useDateAppointments } from '../../hooks/appointments/useDateAppointments'
 
 registerLocale('es', es)
 
@@ -13,7 +14,8 @@ const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', '
 
 const AgendaView = () => {
 
-    const [startDate, setStartDate] = useState(new Date());
+    const { onChangeSelectedDate, startDate } = useDateAppointments()
+    const { getAgenda } = useAppointments()
 
     const getDayTime = () => {
         const dayNumber = startDate.getDay()
@@ -27,6 +29,11 @@ const AgendaView = () => {
         )
     }
 
+
+    useEffect(() => {
+        getAgenda()
+    }, [])
+
     return (
         <>
 
@@ -39,7 +46,7 @@ const AgendaView = () => {
                     <div className='mt-10'>
                         <DatePicker
                             selected={startDate}
-                            onChange={(date) => setStartDate(date)}
+                            onChange={(date) => onChangeSelectedDate(date)}
                             inline
                             locale='es'
                         />
@@ -51,7 +58,7 @@ const AgendaView = () => {
                 <div className='w-4/5 flex flex-row bg-gray-300 p-10'>
                     <AgendaTable />
                 </div>
-                <UpdateAppointmentModal />
+                <CreateAppointmentModal />
             </div>
         </>
 

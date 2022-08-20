@@ -9,13 +9,15 @@ export const AppointmentsProvider = ({ children }) => {
     const [appointmentsAgenda, setAppointmentsAgenda] = useState([])
     const [updateOpen, setUpdateOpen] = useState(false)
     const [appointmentToUpdate, setAppointmentToUpdate] = useState({})
+    const [selectedDate, setSelectedDate] = useState(null)
 
     return (
         <Context.Provider value={{
             agenda, setAgenda,
             appointmentsAgenda, setAppointmentsAgenda,
             updateOpen, setUpdateOpen,
-            appointmentToUpdate, setAppointmentToUpdate
+            appointmentToUpdate, setAppointmentToUpdate,
+            selectedDate, setSelectedDate
         }} >
             {children}
         </Context.Provider>
