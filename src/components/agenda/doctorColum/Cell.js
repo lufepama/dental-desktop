@@ -5,9 +5,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppointments } from '../../../hooks/appointments/useAppointments';
 
-const Cell = ({ data, doctorAgendaId }) => {
+const Cell = ({ data, doctorName, doctorAppointmentsId, doctorColumn }) => {
 
-    const { handleUpdateOpen, updateAppointementDataToBeUpdated, getArrayOfCellsInRangedAppointment } = useAppointments()
+    const { handleUpdateOpen, updateAppointementDataToBeUpdated,
+        getArrayOfCellsInRangedAppointment, updateCurrentDoctorAppointments
+    } = useAppointments()
 
     const onHeighCellCorrection = () => {
 
@@ -53,7 +55,8 @@ const Cell = ({ data, doctorAgendaId }) => {
 
     const onAddAppointment = () => {
         handleUpdateOpen()
-        updateAppointementDataToBeUpdated(data, doctorAgendaId)
+        updateCurrentDoctorAppointments(doctorColumn, doctorAppointmentsId)
+        updateAppointementDataToBeUpdated({ data, doctorName, doctorAppointmentsId })
         getArrayOfCellsInRangedAppointment()
     }
 
@@ -61,6 +64,7 @@ const Cell = ({ data, doctorAgendaId }) => {
         handleUpdateOpen()
         updateAppointementDataToBeUpdated(data)
     }
+
 
     return (
         <>

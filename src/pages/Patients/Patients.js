@@ -47,27 +47,15 @@ function createData(
     return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-
-
 const Patients = () => {
 
-    const { patientsList, fetchGetPatientList, handleDeletePatient,
+    const { patientsList, fetchGetPatientList,
+        isPatientDeleted,
+
+        handleDeletePatient,
         handleOpenPatientWindow,
-        handleCloseWindow,
-        isPatienteDeleted,
-        openPatientInformationWindow,
         updateIsPatientDeleted
     } = usePatient()
-    const { onUpdatePatient } = useUpdatePatient()
-
 
     useEffect(() => {
         fetchGetPatientList()
@@ -122,10 +110,10 @@ const Patients = () => {
                         </Table>
                     </TableContainer>
                     {
-                        isPatienteDeleted && <h1>Borrado</h1>
+                        isPatientDeleted && <h1>Borrado</h1>
                     }
                     {
-                        <span>Se han encontrado <span className='font-bold'>{patientsList.length}</span> {patientsList.length > 1 ? 'registros' : 'registro'} </span>
+                        <span>Se ha encontrado <span className='font-bold'>{patientsList.length}</span> {patientsList.length > 1 ? 'registros' : 'registro'} </span>
                     }
                 </div>
             </div>

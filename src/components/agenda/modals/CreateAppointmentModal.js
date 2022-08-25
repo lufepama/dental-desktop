@@ -1,5 +1,5 @@
 import { Box, Modal, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppointments } from '../../../hooks/appointments/useAppointments'
 import HeaderWindows from '../../shared/HeaderWindows'
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
@@ -8,23 +8,54 @@ import MenuItem from '@mui/material/MenuItem';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button } from '@mui/material';
 import AutocompleteInput from '../../AutocompleteInput';
 
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import PatientCreationForm from '../../PatientCreationForm';
 import { usePatient } from '../../../hooks/patients/usePatient'
 
+const hours = [
+    '10:00', '10:15', '10:30', '10:45',
+    '11:00', '11:15', '11:30', '11:45',
+    '12:00', '12:15', '12:30', '12:45',
+    '13:00', '13:15', '13:30', '13:45',
+    '14:00', '14:15', '14:30', '14:45',
+    '15:00', '15:15', '15:30', '15:45',
+    '16:00', '16:15', '16:30', '16:45',
+    '17:00', '17:15', '17:30', '17:45',
+    '18:00', '18:15', '18:30', '18:45',
+    '19:00', '19:15', '19:30', '19:45',
+    '20:00', '20:15', '20:30', '20:45',
+    '21:00', '21:15', '21:30', '21:45', '22:00'
+]
+
 const CreateAppointmentModal = () => {
 
-    const { updateOpen,
-        handleUpdateClose, } = useAppointments()
+    const { updateOpen, selectedCellInfo, doctorAppointmentsId,
+        handleUpdateClose, getAppointmentsIdsListRanged, postCreateNewAppointment, getAgenda
+    } = useAppointments()
     const { selectedDate } = useDateAppointments()
     const [isPatientRegistered, setIsPatientRegistered] = useState(true)
-    const [selectedPatientInputInformation, setSelectedPatientInputInformation] = useState({})
+    const [selectedPatientInputInformation, setSelectedPatientInputInformation] = useState({}) //Autocomplete
+    const [listHours, setListHours] = useState([])
+    const [lowLimitHourIndex, setLowLimitHourIndex] = useState(hours.indexOf(selectedCellInfo.cellData.hour))
+    const [listOfRangedIds, setListOfRangedIds] = useState([])
 
     const { patientsList } = usePatient()
-    const [age, setAge] = React.useState('');
+    const [rangedHour, setRangedHour] = useState('');
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value);
+    const handleHoursRanged = () => {
+        const listHours = []
+        const limitIndex = lowLimitHourIndex + 4
+
+        for (let i = lowLimitHourIndex + 1; i <= limitIndex; i++) {
+            listHours.push(hours[i])
+        }
+        setListHours(listHours)
+    }
+
+    const handleChange = (event) => {
+        const value = getAppointmentsIdsListRanged(lowLimitHourIndex, event.target.value)
+        setListOfRangedIds(value)
+        setRangedHour(event.target.value);
     };
 
     const handleSeletedPatientInput = (value) => {
@@ -34,6 +65,20 @@ const CreateAppointmentModal = () => {
     const handlePatientActivity = () => {
         setIsPatientRegistered(prev => !prev)
     }
+
+    const handleSave = async () => {
+        const appointmentData = { listOfRangedIds, doctorAppointmentsId }
+        const res = await postCreateNewAppointment(appointmentData)
+        const { success } = res
+        if (success) {
+            console.log(res)
+            getAgenda()
+        }
+    }
+
+    useEffect(() => {
+        handleHoursRanged()
+    }, [updateOpen])
 
     return (
         <Modal
@@ -52,22 +97,27 @@ const CreateAppointmentModal = () => {
                         <div className='flex flex-row w-full justify-between'>
                             <div className='flex flex-row mt-2'>
                                 <span className='text-lg font-bold'>Fecha: </span>
-                                <span className='text-lg ml-2 bg-white'>12/11/2022 </span>
+                                <span className='text-lg ml-2 bg-white'>
+                                    {selectedDate.getDate()}/{selectedDate.getMonth() + 1}/{selectedDate.getFullYear()}
+
+                                </span>
                             </div>
                             <div className='flex flex-row mt-2'>
                                 <span className='text-lg font-bold'>Hora de la cita: </span>
-                                <span className='text-lg ml-2 '>10:10</span>
+                                <span className='text-lg ml-2 '>{selectedCellInfo.cellData.hour}</span>
                                 <span className='text-lg ml-2'>-</span>
                                 <FormControl sx={{ minWidth: 120, height: 20, marginLeft: 1 }}>
                                     <Select
-                                        value={age}
+                                        value={rangedHour}
                                         onChange={handleChange}
                                         displayEmpty
                                         className='h-8'
                                     >
-                                        <MenuItem value={10}>10:15</MenuItem>
-                                        <MenuItem value={20}>10:30</MenuItem>
-                                        <MenuItem value={30}>10:45</MenuItem>
+                                        {
+                                            listHours.map(el =>
+                                                <MenuItem value={el}>{el}</MenuItem>
+                                            )
+                                        }
                                     </Select>
                                 </FormControl>
                             </div>
@@ -79,7 +129,7 @@ const CreateAppointmentModal = () => {
                         <div className="flex flex-row w-full justify-around mt-3">
                             <div className='flex flex-row mt-2'>
                                 <span className='text-lg font-bold'>Doctor: </span>
-                                <span className='text-lg ml-2 bg-white'>Dr.Martinita </span>
+                                <span className='text-lg ml-2 bg-white'>Dr.{selectedCellInfo.doctorInfo.doctorName} </span>
                             </div>
                             <div className='flex flex-row mt-2'>
                                 <span className='text-lg font-bold'>Especialidad: </span>
@@ -113,14 +163,14 @@ const CreateAppointmentModal = () => {
                                 )
                                 : (
                                     <div className="flex flex-col mt-5">
-                                        <PatientCreationForm />
+                                        <PatientCreationForm fromAutocomplete={undefined} patientData={undefined} handleSeletedPatientInput={undefined} />
                                     </div>
                                 )
                         }
                     </div>
                     <div className="flex flex-row justify-center">
-                        <Button variant="contained" component="span" color='success' className='mt-3'>
-                            <span>Actualizar</span>
+                        <Button onClick={() => handleSave()} variant="contained" component="span" color='success' className='mt-3'>
+                            <span>Guardar</span>
                         </Button>
                         <Button variant="contained" component="span" color='primary' className='mt-3 ml-3'>
                             <span>Cerrar</span>

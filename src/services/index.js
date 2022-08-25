@@ -1,3 +1,3 @@
-export default  fetchUpdatePatientInfo = (data) => {
+export default fetchUpdatePatientInfo = (data) => {
 
 }

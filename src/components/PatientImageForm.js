@@ -9,9 +9,6 @@ const Input = styled('input')({
 
 const PatientImageForm = ({ onFileUpload, setImage, title }) => {
 
-    // const [image, setImage] = useState(null)
-    // const { hasUserCreated } = usePatient()
-
     const handleFileChange = (e) => {
         try {
             const img = {

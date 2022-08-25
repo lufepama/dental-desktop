@@ -6,19 +6,23 @@ export const useAppointments = () => {
 
     const { agenda, setAgenda,
         appointmentsAgenda, setAppointmentsAgenda,
-        updateOpen, setUpdateOpen
+        updateOpen, setUpdateOpen,
+        selectedCellInfo, setSelectedCellInfo,
+        currentDoctorAppointments, setCurrentDoctorAppointments,
+        doctorAppointmentsId, setDoctorAppointmentsId,
     } = useContext(ApointmentContext)
 
     const postCreateNewAppointment = async (appointmentData) => {
-        const response = await fetch(`${BACKEND_URL}/api/appointments/create`, {
+        const response = await fetch(`${BACKEND_URL}/api/appointment/create-appointment`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(appointmentData)
         })
-
+        console.log(response)
         const resJson = await response.json()
+
         return resJson
     }
 
@@ -38,8 +42,15 @@ export const useAppointments = () => {
     const handleUpdateOpen = () => setUpdateOpen(true)
     const handleUpdateClose = () => setUpdateOpen(false)
 
-    const updateAppointementDataToBeUpdated = (dataToUpdate, doctorAgendaId) => {
-        console.log(dataToUpdate, doctorAgendaId);
+    const updateAppointementDataToBeUpdated = ({ data, doctorName, doctorAppointmentsId }) => {
+
+        const cellInfo = {
+            cellData: data,
+            doctorInfo: { doctorName, doctorAppointmentsId }
+        }
+
+        setSelectedCellInfo(cellInfo)
+
     }
 
     const getArrayOfCellsInRangedAppointment = (doctorId = '62ad35f724f68a85f25cf09f', initCell = '10:00', upCell = '11:00') => {
@@ -53,18 +64,38 @@ export const useAppointments = () => {
         return null
     }
 
+    const updateCurrentDoctorAppointments = (appointmentsList, doctorAppointmentsId) => {
+        setDoctorAppointmentsId(doctorAppointmentsId)
+        setCurrentDoctorAppointments(appointmentsList)
+    }
+
+    const getAppointmentsIdsListRanged = (lowIndex, highHour) => {
+
+        const highIndex = currentDoctorAppointments.findIndex(el => el.hour === highHour)
+        const appointmentsIdList = []
+        for (let i = lowIndex; i <= highIndex; i++) {
+            const currentId = currentDoctorAppointments[i].appointmentId
+            appointmentsIdList.push(currentId)
+        }
+        return appointmentsIdList
+    }
 
     return {
         agenda,
         appointmentsAgenda,
         updateOpen,
+        selectedCellInfo,
+        currentDoctorAppointments,
+        doctorAppointmentsId,
 
         handleUpdateOpen,
         handleUpdateClose,
         postCreateNewAppointment,
         getAgenda,
         updateAppointementDataToBeUpdated,
-        getArrayOfCellsInRangedAppointment
+        getArrayOfCellsInRangedAppointment,
+        updateCurrentDoctorAppointments,
+        getAppointmentsIdsListRanged
     }
 
 }

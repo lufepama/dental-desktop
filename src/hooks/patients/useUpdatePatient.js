@@ -1,5 +1,4 @@
-import { formControlUnstyledClasses } from '@mui/base'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { BACKEND_URL } from '../../backend'
 import PatientsContext from '../../context/patients/PatientsContext'
 import { managePatientFormData } from '../../helpers/PatientHistory/index'
@@ -36,7 +35,6 @@ export const useUpdatePatient = () => {
 
 
     const onChangeUpdatePatientForm = (value) => {
-        console.log('vallll', value)
         setUpdateInfoForm(value)
     }
 
@@ -46,9 +44,10 @@ export const useUpdatePatient = () => {
         patientInfoToUpdate,
         updateInfoForm,
         isPatientUpdated,
+        setPatientInfoToUpdate,
+
         onChangeUpdatePatientForm,
         putPatientInformation,
-        setPatientInfoToUpdate,
         onSaveUpdatedPatientInformation,
         resetIsPatientUpdated
     }

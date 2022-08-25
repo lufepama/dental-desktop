@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import { BACKEND_URL } from '../../backend'
 import PatientsContext from '../../context/patients/PatientsContext'
-import Patient from '../../interconexions/Patient/index'
 
 import { useActiveWindow } from '../activewindow/useActiveWindow';
 import { usePatientHistory } from '../patienthistory/usePatientHistory';
@@ -10,12 +9,11 @@ import { managePatientFormData } from '../../helpers/PatientHistory/index'
 
 export const usePatient = () => {
 
-    const { patientsList, setPatientsList, fetchGetPatientList,
+    const { patientsList, setPatientsList, fetchGetPatientList, setPatientInfoToUpdate,
         hasUserCreated, setHasUserCreated, isPatienteDeleted, setIsPatientDeleted,
     } = useContext(PatientsContext)
     const { setActiveWindow } = useActiveWindow()
     const { setActivePatientInformation } = usePatientHistory()
-    const { setPatientInfoToUpdate } = useUpdatePatient()
 
     const onUserCreated = (value) => {
         setHasUserCreated(value)
@@ -50,8 +48,6 @@ export const usePatient = () => {
         return {}
     }
 
-
-
     const postCreateNewPatient = async (patientData) => {
 
         const formInfoData = managePatientFormData(patientData)
@@ -73,19 +69,16 @@ export const usePatient = () => {
         setActivePatientInformation(patientData)
     }
 
-    const handleCloseWindow = () => {
-        Patient.closePatientListWindow()
-    }
-
     return {
-        postCreateNewPatient,
+        isPatienteDeleted,
         patientsList,
         fetchGetPatientList,
-        hasUserCreated, onUserCreated,
+        hasUserCreated,
+
+        onUserCreated,
         handleDeletePatient,
+        postCreateNewPatient,
         handleOpenPatientWindow,
-        handleCloseWindow,
-        isPatienteDeleted,
         updateIsPatientDeleted,
         openPatientHistoryWindow,
     }

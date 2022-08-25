@@ -22,7 +22,7 @@ const DoctorsColumns = () => {
                                 </td>
                             </tr>
                         </th>
-                        <DoctorCells doctorAgendaId={el._id} data={el.hoursAppointments} />
+                        <DoctorCells doctorAppointmentsId={el.doctorAppointmentsId} doctorName={el.doctorName} data={el.hoursAppointments} />
                     </td>
                 )
             }

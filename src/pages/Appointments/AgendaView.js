@@ -14,21 +14,20 @@ const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', '
 
 const AgendaView = () => {
 
-    const { onChangeSelectedDate, startDate } = useDateAppointments()
-    const { getAgenda } = useAppointments()
+    const { onChangeSelectedDate, selectedDate } = useDateAppointments()
+    const { getAgenda, updateOpen } = useAppointments()
 
     const getDayTime = () => {
-        const dayNumber = startDate.getDay()
+        const dayNumber = selectedDate.getDay()
         const dayOfWeek = days[dayNumber]
         return (
             <>
-                <span className='font-bold text-5xl'>{startDate.toDateString().substring(8, 10)}</span>
+                <span className='font-bold text-5xl'>{selectedDate.toDateString().substring(8, 10)}</span>
                 <span className='font-bold text-2xl'>{dayOfWeek}</span>
-                <span className=' text-2xl'>{startDate.getFullYear()}</span>
+                <span className=' text-2xl'>{selectedDate.getFullYear()}</span>
             </>
         )
     }
-
 
     useEffect(() => {
         getAgenda()
@@ -45,7 +44,7 @@ const AgendaView = () => {
                     </div>
                     <div className='mt-10'>
                         <DatePicker
-                            selected={startDate}
+                            selected={selectedDate}
                             onChange={(date) => onChangeSelectedDate(date)}
                             inline
                             locale='es'
@@ -58,7 +57,10 @@ const AgendaView = () => {
                 <div className='w-4/5 flex flex-row bg-gray-300 p-10'>
                     <AgendaTable />
                 </div>
-                <CreateAppointmentModal />
+                {
+                    updateOpen && <CreateAppointmentModal />
+                }
+
             </div>
         </>
 
