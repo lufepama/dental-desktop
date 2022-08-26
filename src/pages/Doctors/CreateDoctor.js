@@ -18,18 +18,22 @@ const CreateDoctor = () => {
     const [patientData, setPatientData] = useState({
         firstName: 'Daniela',
         lastName: 'Paz martinez',
-        spectiality: 'Ortodoncista',
         qualification: 'Master',
         phoneNumber: '234234234',
-        address: 'Calle'
+        address: 'Calle',
+        speciality:'General'
     })
     const { isSuccess, successMessage } = creationMessage
-    const { firstName, lastName, spectiality, qualification, phoneNumber, address } = patientData
+    const { firstName, lastName, qualification, phoneNumber, address, speciality } = patientData
 
     const handleChange = (name) =>
         (event) => {
             setPatientData({ ...patientData, [name]: event.target.value })
         };
+
+    const handleSpeciality = (e) => {
+        setPatientData({ ...patientData, speciality: e.target.value })
+    }
 
     const handleSubmit = async () => {
         const response = await window.api.openDialogPatientCreation(firstName)
@@ -73,10 +77,6 @@ const CreateDoctor = () => {
                         <input className='h-8 border-2 border-gray-600' type='text' value={lastName} onChange={handleChange('lastName')} />
                     </div>
                     <div className='flex flex-col'>
-                        <span>Especialidad</span>
-                        <input className='h-8 border-2 border-gray-600' type='text' value={spectiality} onChange={handleChange('spectiality')} />
-                    </div>
-                    <div className='flex flex-col'>
                         <span>Cualificacion</span>
                         <input className='h-8 border-2 border-gray-600' type='text' value={qualification} onChange={handleChange('qualification')} />
                     </div>
@@ -90,9 +90,19 @@ const CreateDoctor = () => {
                         <span>Numero de contacto</span>
                         <input className='h-8 border-2 border-gray-600' value={phoneNumber} onChange={handleChange('phoneNumber')} />
                     </div>
+                    <div className='flex flex-col'>
+                    <select onChange={handleSpeciality} value={speciality}>
+                        <option value='General'>General</option>
+                        <option value='Periodoncista'>Periodoncista</option>
+                        <option value='Endodoncista'>Endodoncista</option>
+                        <option value='Cirujano'>Cirujano</option>
+                        <option value='Ortodoncista'>Ortodoncista</option>
+                    </select>
+                    </div>
+                    
                 </div>
                 <div className='w-1/3 bg-red-400'>
-
+                
                 </div>
             </div>
             <div className='h-1/5 flex flex-row justify-center items-center'>

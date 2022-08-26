@@ -79,7 +79,6 @@ const CreatePatient = () => {
         <div className='w-screen h-screen bg-gray-200'>
             <div className='w-full h-16'>
                 <HeaderWindows icon={<SupervisedUserCircleIcon className='text-gray-100' fontSize='inherit' />} title='Crear nuevo paciente' />
-
             </div>
             {
                 isSuccess && (

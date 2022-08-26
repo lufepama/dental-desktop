@@ -61,10 +61,9 @@ const Cell = ({ data, doctorName, doctorAppointmentsId, doctorColumn }) => {
     }
 
     const onDeleteAppointment = () => {
-        handleUpdateOpen()
-        updateAppointementDataToBeUpdated(data)
+        // handleUpdateOpen()
+        // updateAppointementDataToBeUpdated(data)
     }
-
 
     return (
         <>
@@ -80,9 +79,6 @@ const Cell = ({ data, doctorName, doctorAppointmentsId, doctorColumn }) => {
                                             <>
                                                 <IconButton color="secondary" aria-label="add an alarm" onClick={() => { onDeleteAppointment() }}>
                                                     <DeleteIcon />
-                                                </IconButton>
-                                                <IconButton color="secondary" aria-label="add an alarm" onClick={() => { onEditAppointment() }}>
-                                                    <EditIcon />
                                                 </IconButton>
                                             </>
 
