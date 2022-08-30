@@ -10,6 +10,7 @@ export const useAppointments = () => {
         selectedCellInfo, setSelectedCellInfo,
         currentDoctorAppointments, setCurrentDoctorAppointments,
         doctorAppointmentsId, setDoctorAppointmentsId,
+        deleteOpen, setDeleteOpen
     } = useContext(ApointmentContext)
 
     const postCreateNewAppointment = async (appointmentData) => {
@@ -26,7 +27,21 @@ export const useAppointments = () => {
         return resJson
     }
 
-    const getAgenda = async (week = '34') => {
+    const deleteAppointment = async (appointmentData) => {
+        const response = await fetch(`${BACKEND_URL}/api/appointment/delete-detail-appointment`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(appointmentData)
+        })
+        const resJson = await response.json()
+
+        return resJson
+    }
+
+
+    const getAgenda = async (week = '35') => {
 
         const res = await fetch(`${BACKEND_URL}/api/appointment/get-agenda/${week}`, {
             method: 'GET',
@@ -41,16 +56,17 @@ export const useAppointments = () => {
 
     const handleUpdateOpen = () => setUpdateOpen(true)
     const handleUpdateClose = () => setUpdateOpen(false)
+    const handleDeleteOpen = () => setDeleteOpen(true)
+    const handleDeleteClose = () => setDeleteOpen(false)
 
-    const updateAppointementDataToBeUpdated = ({ data, doctorName, doctorAppointmentsId }) => {
-
+    const updateAppointementDataToBeUpdated = ({ data, doctorName, doctorAppointmentsId, doctorSpeciality='',appointmentsAvailable=''}) => {
+        
         const cellInfo = {
             cellData: data,
-            doctorInfo: { doctorName, doctorAppointmentsId }
+            doctorInfo: { doctorName, doctorAppointmentsId, doctorSpeciality, appointmentsAvailable }
         }
-
+        console.log(cellInfo)
         setSelectedCellInfo(cellInfo)
-
     }
 
     const getArrayOfCellsInRangedAppointment = (doctorId = '62ad35f724f68a85f25cf09f', initCell = '10:00', upCell = '11:00') => {
@@ -70,7 +86,7 @@ export const useAppointments = () => {
     }
 
     const getAppointmentsIdsListRanged = (lowIndex, highHour) => {
-
+        console.log({highHour})
         const highIndex = currentDoctorAppointments.findIndex(el => el.hour === highHour)
         const appointmentsIdList = []
         for (let i = lowIndex; i <= highIndex; i++) {
@@ -84,6 +100,7 @@ export const useAppointments = () => {
         agenda,
         appointmentsAgenda,
         updateOpen,
+        deleteOpen,
         selectedCellInfo,
         currentDoctorAppointments,
         doctorAppointmentsId,
@@ -95,7 +112,10 @@ export const useAppointments = () => {
         updateAppointementDataToBeUpdated,
         getArrayOfCellsInRangedAppointment,
         updateCurrentDoctorAppointments,
-        getAppointmentsIdsListRanged
+        getAppointmentsIdsListRanged,
+        deleteAppointment,
+        handleDeleteClose,
+        handleDeleteOpen
     }
 
 }

@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { useAppointments } from '../../../hooks/appointments/useAppointments';
+import { data } from 'autoprefixer';
 
-const Cell = ({ data, doctorName, doctorAppointmentsId, doctorColumn }) => {
+const Cell = ({ data, doctorName, doctorAppointmentsId, doctorColumn, appointmentsAvailable, doctorSpeciality}) => {
 
     const { handleUpdateOpen, updateAppointementDataToBeUpdated,
-        getArrayOfCellsInRangedAppointment, updateCurrentDoctorAppointments
+        updateCurrentDoctorAppointments, handleDeleteOpen,
     } = useAppointments()
 
     const onHeighCellCorrection = () => {
@@ -18,13 +18,13 @@ const Cell = ({ data, doctorName, doctorAppointmentsId, doctorColumn }) => {
             let backgroundColor = ''
             switch (Number(data.squares)) {
                 case 1:
-                    heighClassValue = 'h-16'
+                    heighClassValue = 'h-20'
                     break;
                 case 2:
-                    heighClassValue = 'h-32'
+                    heighClassValue = 'h-40'
                     break;
                 case 3:
-                    heighClassValue = 'h-64'
+                    heighClassValue = 'h-60'
                     break;
                 default:
             }
@@ -48,21 +48,15 @@ const Cell = ({ data, doctorName, doctorAppointmentsId, doctorColumn }) => {
         }
     }
 
-    const onEditAppointment = () => {
-        handleUpdateOpen()
-        updateAppointementDataToBeUpdated(data)
-    }
-
     const onAddAppointment = () => {
         handleUpdateOpen()
         updateCurrentDoctorAppointments(doctorColumn, doctorAppointmentsId)
-        updateAppointementDataToBeUpdated({ data, doctorName, doctorAppointmentsId })
-        getArrayOfCellsInRangedAppointment()
+        updateAppointementDataToBeUpdated({ data, doctorName, doctorAppointmentsId, doctorSpeciality, appointmentsAvailable })
     }
 
-    const onDeleteAppointment = () => {
-        // handleUpdateOpen()
-        // updateAppointementDataToBeUpdated(data)
+    const onDeleteAppointment = async () => {
+        handleDeleteOpen()
+        updateAppointementDataToBeUpdated({ data, doctorName, doctorAppointmentsId })
     }
 
     return (
@@ -71,31 +65,38 @@ const Cell = ({ data, doctorName, doctorAppointmentsId, doctorColumn }) => {
                 data.isDisplayed
                     ?
                     <div className={onHeighCellCorrection()}>
-                        <div className='relative flex flex-col'>
-                            <div className='absolute bottom-3 right-0 flex flex-row'>
-                                {
+                        <div className='relative flex flex-col '>
+                            <div className=' flex flex-row'>
+                                {   
                                     data.isOccupated
                                         ? (
                                             <>
-                                                <IconButton color="secondary" aria-label="add an alarm" onClick={() => { onDeleteAppointment() }}>
+                                            <div className="flex flex-col">
+                                                <span className='text-sm '>
+                                                    ({data.hour}-{data.highHour})
+                                                </span>
+                                                <span className="text-sm">
+                                                    {data.patientFirstName}
+                                                </span>
+                                                <span className="text-sm">
+                                                    Causa: <span className="font-bold">{data.appointmentCause}</span>
+                                                </span>
+                                            </div>
+                                                <IconButton className='absolute bottom-5 right-0' color="secondary" aria-label="add an alarm" onClick={() => { onDeleteAppointment() }}>
                                                     <DeleteIcon />
                                                 </IconButton>
                                             </>
-
+                                                
                                         )
                                         : (
-                                            <IconButton color="secondary" aria-label="add an alarm" onClick={() => { onAddAppointment() }}>
+                                            <IconButton className='absolute -bottom-10 right-0' color="secondary" aria-label="add an alarm" onClick={() => { onAddAppointment() }}>
                                                 <AddIcon />
                                             </IconButton>
                                         )
                                 }
-
                             </div>
-
-                            <span className='text-sm'>patient {data.patientId}</span>
-                            <span className='text-xs'>patient {data.patientId}</span>
+                            
                         </div>
-
                     </div>
                     : <div>
                         <td colSpan={data.squares.toString()} className='hidden' >

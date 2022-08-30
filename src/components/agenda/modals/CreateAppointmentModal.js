@@ -32,6 +32,7 @@ const CreateAppointmentModal = () => {
     const { updateOpen, selectedCellInfo, doctorAppointmentsId,
         handleUpdateClose, getAppointmentsIdsListRanged, postCreateNewAppointment, getAgenda
     } = useAppointments()
+    
     const { selectedDate } = useDateAppointments()
     const [isPatientRegistered, setIsPatientRegistered] = useState(true)
     const [selectedPatientInputInformation, setSelectedPatientInputInformation] = useState({}) //Autocomplete
@@ -40,7 +41,8 @@ const CreateAppointmentModal = () => {
     const [listOfRangedIds, setListOfRangedIds] = useState([])
 
     const { patientsList } = usePatient()
-    const [rangedHour, setRangedHour] = useState('');
+    const [highHour, setHighHour] = useState('');
+    const [appointmentCause, setAppointmentCause] = useState('')
 
     const handleHoursRanged = () => {
         const listHours = []
@@ -52,11 +54,15 @@ const CreateAppointmentModal = () => {
         setListHours(listHours)
     }
 
-    const handleChange = (event) => {
+    const handleHourChange = (event) => {
         const value = getAppointmentsIdsListRanged(lowLimitHourIndex, event.target.value)
         setListOfRangedIds(value)
-        setRangedHour(event.target.value);
+        setHighHour(event.target.value);
     };
+
+    const handleAppointmentCauseChange = (event) => {
+        setAppointmentCause(event.target.value)
+    }
 
     const handleSeletedPatientInput = (value) => {
         setSelectedPatientInputInformation(value)
@@ -67,12 +73,13 @@ const CreateAppointmentModal = () => {
     }
 
     const handleSave = async () => {
-        const appointmentData = { listOfRangedIds, doctorAppointmentsId }
+        const patientInformation = selectedPatientInputInformation
+        const appointmentData = { listOfRangedIds, doctorAppointmentsId, highHour, appointmentCause,patientInformation  }
         const res = await postCreateNewAppointment(appointmentData)
         const { success } = res
         if (success) {
-            console.log(res)
             getAgenda()
+            handleUpdateClose()
         }
     }
 
@@ -91,7 +98,7 @@ const CreateAppointmentModal = () => {
                 <div className='w-full h-1/6 bg-blue-300'>
                     <HeaderWindows title='Crear cita' icon={<PermContactCalendarIcon />} />
                 </div>
-                <div className='w-full h-5/6 bg-gray-100 overflow-scroll	'>
+                <div className='flex flex-col justify-between pb-5 w-full h-5/6 bg-gray-100 overflow-scroll'>
                     <div className="pl-6 pr-6 flex flex-col">
                         <span className='text-lg font-bold underline'>Informacion clinica</span>
                         <div className='flex flex-row w-full justify-between'>
@@ -108,14 +115,14 @@ const CreateAppointmentModal = () => {
                                 <span className='text-lg ml-2'>-</span>
                                 <FormControl sx={{ minWidth: 120, height: 20, marginLeft: 1 }}>
                                     <Select
-                                        value={rangedHour}
-                                        onChange={handleChange}
+                                        value={highHour}
+                                        onChange={handleHourChange}
                                         displayEmpty
                                         className='h-8'
                                     >
                                         {
                                             listHours.map(el =>
-                                                <MenuItem value={el}>{el}</MenuItem>
+                                                <MenuItem key={el} value={el}>{el}</MenuItem>
                                             )
                                         }
                                     </Select>
@@ -133,7 +140,24 @@ const CreateAppointmentModal = () => {
                             </div>
                             <div className='flex flex-row mt-2'>
                                 <span className='text-lg font-bold'>Especialidad: </span>
-                                <span className='text-lg ml-2 bg-white'>General</span>
+                                <span className='text-lg ml-2 bg-white'>{selectedCellInfo.doctorInfo.doctorSpeciality}</span>
+                            </div>
+                            <div className='flex flex-row mt-2'>
+                                <span className='text-lg font-bold'>Motivo de la cita: </span>
+                                <FormControl sx={{ minWidth: 120, height: 20, marginLeft: 1 }}>
+                                    <Select
+                                        value={appointmentCause}
+                                        onChange={handleAppointmentCauseChange}
+                                        displayEmpty
+                                        className='h-8'
+                                    >
+                                        {
+                                            selectedCellInfo.doctorInfo.appointmentsAvailable.map(el =>
+                                                <MenuItem value={el.description}>{el.description}</MenuItem>
+                                            )
+                                        }
+                                    </Select>
+                                </FormControl>
                             </div>
                         </div>
                     </div>
@@ -172,7 +196,7 @@ const CreateAppointmentModal = () => {
                         <Button onClick={() => handleSave()} variant="contained" component="span" color='success' className='mt-3'>
                             <span>Guardar</span>
                         </Button>
-                        <Button variant="contained" component="span" color='primary' className='mt-3 ml-3'>
+                        <Button onClick={()=> { handleUpdateClose() }} variant="contained" component="span" color='primary' className='mt-3 ml-3'>
                             <span>Cerrar</span>
                         </Button>
                     </div>

@@ -1,10 +1,11 @@
 import React from 'react'
 import { useAppointments } from '../../../hooks/appointments/useAppointments'
 import DoctorCells from './DoctorCellsList'
+import CreateAppointmentModal from '../modals/CreateAppointmentModal'
 
 const DoctorsColumns = () => {
 
-    const { appointmentsAgenda } = useAppointments()
+    const { appointmentsAgenda, updateOpen} = useAppointments()
 
 
     return (
@@ -16,13 +17,14 @@ const DoctorsColumns = () => {
                         <th className='flex flex-row justify-center'>
                             <tr>
                                 <td>
-                                    <div>
                                         <span className='text-lg'>{el.doctorName}</span>
-                                    </div>
                                 </td>
                             </tr>
                         </th>
-                        <DoctorCells doctorAppointmentsId={el.doctorAppointmentsId} doctorName={el.doctorName} data={el.hoursAppointments} />
+                        <DoctorCells doctorAppointmentsId={el.doctorAppointmentsId} 
+                            doctorName={el.doctorName} data={el.hoursAppointments} 
+                            doctorSpeciality={el.speciality} appointmentsAvailable={el.appointmentsAvailable}
+                        />
                     </td>
                 )
             }

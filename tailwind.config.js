@@ -8,6 +8,9 @@ module.exports = {
       colors: {
         'history-blue': '#86bcda',
         'history-gray': '#EDEDED'
+      },
+      height:{
+        '60': '15rem'
       }
     },
   },

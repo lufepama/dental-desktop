@@ -8,6 +8,7 @@ export const AppointmentsProvider = ({ children }) => {
     const [agenda, setAgenda] = useState({})
     const [appointmentsAgenda, setAppointmentsAgenda] = useState([])
     const [updateOpen, setUpdateOpen] = useState(false)
+    const [deleteOpen, setDeleteOpen] = useState(false)
     const [appointmentToUpdate, setAppointmentToUpdate] = useState({})
     const [selectedDate, setSelectedDate] = useState(new Date())
     const [selectedCellInfo, setSelectedCellInfo] = useState({})
@@ -24,7 +25,8 @@ export const AppointmentsProvider = ({ children }) => {
             selectedDate, setSelectedDate,
             selectedCellInfo, setSelectedCellInfo,
             doctorAppointmentsId, setDoctorAppointmentsId,
-            currentDoctorAppointments, setCurrentDoctorAppointments
+            currentDoctorAppointments, setCurrentDoctorAppointments,
+            deleteOpen, setDeleteOpen
         }} >
             {children}
         </Context.Provider>

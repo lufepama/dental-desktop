@@ -7,6 +7,7 @@ import AgendaTable from '../../components/agenda/AgendaTable'
 import { useAppointments } from '../../hooks/appointments/useAppointments'
 import CreateAppointmentModal from '../../components/agenda/modals/CreateAppointmentModal';
 import { useDateAppointments } from '../../hooks/appointments/useDateAppointments'
+import DeleteAppointmentModal from '../../components/agenda/modals/DeleteAppointmentModal';
 
 registerLocale('es', es)
 
@@ -15,7 +16,7 @@ const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', '
 const AgendaView = () => {
 
     const { onChangeSelectedDate, selectedDate } = useDateAppointments()
-    const { getAgenda, updateOpen } = useAppointments()
+    const { getAgenda, updateOpen, deleteOpen } = useAppointments()
 
     const getDayTime = () => {
         const dayNumber = selectedDate.getDay()
@@ -55,10 +56,13 @@ const AgendaView = () => {
                     </Button>
                 </div>
                 <div className='w-4/5 flex flex-row bg-gray-300 p-10'>
-                    <AgendaTable />
+                    <AgendaTable  />
                 </div>
                 {
                     updateOpen && <CreateAppointmentModal />
+                }
+                {
+                    deleteOpen && <DeleteAppointmentModal/>
                 }
 
             </div>
